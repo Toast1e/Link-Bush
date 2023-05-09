@@ -1,0 +1,48 @@
+body {
+	background: linear-gradient(-45deg, #8b8b8b, #a4a4a4, #bcbcbc, #dedede);
+	background-size: 100% 100%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+
+
+#links-container {
+	display: flex;
+	flex-wrap: wrap;
+	font-family: 'Heebo', sans-serif;
+	
+}
+
+#input-text {
+	font-family: 'Heebo', sans-serif;
+}
+
+#input-div {
+	margin-left: 20px;
+	margin-bottom: 40px;
+	position: absolute; 
+	bottom: 0;
+}
+
+
+.link {
+	margin: 10px;
+	padding: 10px;
+	background-color: #f0f0f0;
+	border-radius: 5px;
+	font-family: 'Heebo', sans-serif;
+
+}
+
+.link a {
+	display: flex;
+	align-items: center;
+	color: #000;
+	text-decoration: none;
+	font-family: 'Heebo', sans-serif;
+}
+
+.link img {
+	height: 30px;
+	margin-right: 10px;
+}
