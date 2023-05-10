@@ -1,19 +1,28 @@
 body {
-	background: linear-gradient(-45deg, #8b8b8b, #a4a4a4, #bcbcbc, #dedede);
+	background-image: linear-gradient(to bottom right, #f1ede8, #cdc0b1);
 	background-size: 100% 100%;
 	animation: gradient 15s ease infinite;
 	height: 100vh;
 }
 
+h1 {
+	color: #2b2b2b;
+	font-family: 'Arvo', serif;
+	font-family: 'Heebo', sans-serif;
+	font-size: 60px;
+	padding-left: 10px;
+}
 
 #links-container {
 	display: flex;
 	flex-wrap: wrap;
+	font-family: 'Arvo', serif;
 	font-family: 'Heebo', sans-serif;
 	
 }
 
 #input-text {
+	color: #2b2b2b;
 	font-family: 'Heebo', sans-serif;
 }
 
@@ -28,7 +37,7 @@ body {
 .link {
 	margin: 10px;
 	padding: 10px;
-	background-color: #f0f0f0;
+	background-color: #c9beb9;
 	border-radius: 5px;
 	font-family: 'Heebo', sans-serif;
 
@@ -37,7 +46,7 @@ body {
 .link a {
 	display: flex;
 	align-items: center;
-	color: #000;
+	color: #2b2b2b;
 	text-decoration: none;
 	font-family: 'Heebo', sans-serif;
 }
