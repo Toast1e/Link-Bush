@@ -71,4 +71,22 @@ function init() {
 	}
 }
 
+const expandButton = document.getElementById('expand-button');
+const expandDiv = document.getElementById('expand-div');
+const closeButton = document.getElementById('close-button');
+
+expandButton.addEventListener('click', () => {
+  if (expandDiv.style.display === 'block') {
+    expandDiv.style.display = 'none';
+  } else {
+    expandDiv.style.display = 'block';
+    expandDiv.style.height = expandDiv.scrollHeight + 'px';
+  }
+});
+
+closeButton.addEventListener('click', () => {
+  expandDiv.style.display = 'none';
+});
+
+
 init();
