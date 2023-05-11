@@ -18,6 +18,7 @@ function displayLinks() {
 		linkDiv.classList.add('link');
 		const linkA = document.createElement('a');
 		linkA.href = link.url;
+		linkA.target = '_blank'; // Added target attribute
 		const linkImg = document.createElement('img');
 		linkImg.src = link.icon;
 		linkA.appendChild(linkImg);
