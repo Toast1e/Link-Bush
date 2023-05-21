@@ -74,7 +74,7 @@ function init() {
 
 const expandButton = document.getElementById('expand-button');
 const expandDiv = document.getElementById('expand-div');
-const closeButton = document.getElementById('submit');
+const closeButton = document.getElementById('close-button');
 
 expandButton.addEventListener('click', () => {
   if (expandDiv.style.display === 'block') {
