@@ -17,6 +17,11 @@
 
 }
 
+.link:hover {
+	transform: translate(-0.05em, -0.05em);
+	box-shadow: 0.15em 0.15em;
+  }
+
 body {
 	font-family: 'Heebo', sans-serif;
 	background-color: #c7d1cb;
@@ -186,7 +191,7 @@ a {
 	transition: all 0.5s;
   }
 
-  #get-icon, #submit, #close{
+  #get-icon, #submit, #close, .delete-button{
 	background: #abb8c3;
 	font-family: inherit;
 	font-weight: 900;
@@ -209,4 +214,14 @@ a {
   #close:hover {
 	transform: translate(-0.05em, -0.05em);
 	box-shadow: 0.15em 0.15em;
+  }
+
+  .delete-button:hover {
+	transform: translate(-0.05em, -0.05em);
+	box-shadow: 0.15em 0.15em;
+  }
+
+  .expand-image {
+	width: 25px;
+
   }

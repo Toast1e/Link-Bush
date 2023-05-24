@@ -18,13 +18,26 @@ function displayCategories() {
     categoryDiv.classList.add('category');
     const categoryTitle = document.createElement('h2');
     categoryTitle.textContent = category.name;
-    categoryDiv.appendChild(categoryTitle);
+
+    // Add image for category expansion
+    const expandImage = document.createElement('img');
+    expandImage.classList.add('expand-image');
+    expandImage.src = category.expanded ? 'images/image1.png' : 'images/image2.png';
+    categoryTitle.appendChild(expandImage);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete-button');
+    deleteButton.textContent = '*del';
+    categoryTitle.appendChild(deleteButton);
+
     const categoryLinksDiv = document.createElement('div');
     categoryLinksDiv.classList.add('category-links');
     if (category.expanded) {
       categoryLinksDiv.style.display = 'block';
+      deleteButton.style.display = 'block'; // Show delete button when category is expanded
     } else {
       categoryLinksDiv.style.display = 'none';
+      deleteButton.style.display = 'none'; // Hide delete button when category is not expanded
     }
     category.links.forEach((link, index) => {
       const linkDiv = document.createElement('div');
@@ -50,12 +63,24 @@ function displayCategories() {
       linkDiv.appendChild(trashButton);
       categoryLinksDiv.appendChild(linkDiv);
     });
+    categoryDiv.appendChild(categoryTitle);
     categoryDiv.appendChild(categoryLinksDiv);
     categoryTitle.addEventListener('click', () => {
       category.expanded = !category.expanded;
       saveCategories();
       displayCategories();
     });
+
+    // Delete category button event listener
+    deleteButton.addEventListener('click', () => {
+      const categoryIndex = categories.indexOf(category);
+      if (categoryIndex !== -1) {
+        categories.splice(categoryIndex, 1);
+        saveCategories();
+        displayCategories();
+      }
+    });
+
     categoriesContainer.appendChild(categoryDiv);
   });
 }
