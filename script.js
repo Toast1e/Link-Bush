@@ -1,87 +1,72 @@
-const linksContainer = document.getElementById('links-container');
-const form = document.querySelector('form');
-const nameInput = document.getElementById('name');
-const urlInput = document.getElementById('url');
-const iconButton = document.getElementById('get-icon');
-const descriptionInput = document.getElementById('description');
-
-let links = [];
-
-function saveLinks() {
-	localStorage.setItem('links', JSON.stringify(links));
-}
-
-function displayLinks() {
-	linksContainer.innerHTML = '';
-	links.forEach((link, index) => {
-		const linkDiv = document.createElement('div');
-		linkDiv.classList.add('link');
-		const linkA = document.createElement('a');
-		linkA.href = link.url;
-		linkA.target = '_blank'; // Added target attribute
-		const linkImg = document.createElement('img');
-		linkImg.src = link.icon;
-		linkA.appendChild(linkImg);
-		linkA.innerHTML += link.name;
-		const linkDesc = document.createElement('p');
-		linkDesc.innerHTML = link.description;
-		const trashButton = document.createElement('button');
-		trashButton.innerHTML = '&#128465;';
-		trashButton.addEventListener('click', () => {
-			links.splice(index, 1);
-			saveLinks();
-			displayLinks();
-		});
-		linkDiv.appendChild(linkA);
-		linkDiv.appendChild(linkDesc);
-		linkDiv.appendChild(trashButton);
-		linksContainer.appendChild(linkDiv);
-	});
-}
-
-iconButton.addEventListener('click', () => {
-	const url = urlInput.value;
-	if (url.trim()) {
-		const iconUrl = `https://www.google.com/s2/favicons?sz=64&domain=${url}`;
-		iconButton.innerHTML = `<img src="${iconUrl}">`;
-	}
-});
-
-form.addEventListener('submit', event => {
-	event.preventDefault();
-	const name = nameInput.value;
-	const url = urlInput.value;
-	const icon = iconButton.querySelector('img').src;
-	const description = descriptionInput.value;
-	if (name.trim() && url.trim() && icon.trim() && description.trim()) {
-		links.push({ name, url, icon, description });
-		saveLinks();
-		nameInput.value = '';
-		urlInput.value = '';
-		iconButton.innerHTML = 'Get Icon';
-		descriptionInput.value = '';
-		displayLinks();
-	}
-});
-
-function init() {
-	const storedLinks = localStorage.getItem('links');
-	if (storedLinks) {
-		links = JSON.parse(storedLinks);
-		displayLinks();
-	}
-}
-
+const categoriesContainer = document.getElementById('categories-container');
 const expandButton = document.getElementById('expand-button');
 const expandDiv = document.getElementById('expand-div');
-const closeButton = document.getElementById('submit');
+const closeButton = document.getElementById('close');
+const categoryNameInput = document.getElementById('category-name');
+const categoryDropdown = document.getElementById('category-dropdown');
+
+let categories = [];
+
+function saveCategories() {
+  localStorage.setItem('categories', JSON.stringify(categories));
+}
+
+function displayCategories() {
+  categoriesContainer.innerHTML = '';
+  categories.forEach(category => {
+    const categoryDiv = document.createElement('div');
+    categoryDiv.classList.add('category');
+    const categoryTitle = document.createElement('h2');
+    categoryTitle.textContent = category.name;
+    categoryDiv.appendChild(categoryTitle);
+    const categoryLinksDiv = document.createElement('div');
+    categoryLinksDiv.classList.add('category-links');
+    if (category.expanded) {
+      categoryLinksDiv.style.display = 'block';
+    } else {
+      categoryLinksDiv.style.display = 'none';
+    }
+    category.links.forEach((link, index) => {
+      const linkDiv = document.createElement('div');
+      linkDiv.classList.add('link');
+      const linkA = document.createElement('a');
+      linkA.href = link.url;
+      linkA.target = '_blank'; // Added target attribute
+      const linkImg = document.createElement('img');
+      linkImg.src = `https://www.google.com/s2/favicons?domain=${link.url}`;
+      linkA.appendChild(linkImg);
+      linkA.innerHTML += link.name;
+      const linkDesc = document.createElement('p');
+      linkDesc.innerHTML = link.description;
+      const trashButton = document.createElement('button');
+      trashButton.innerHTML = '&#128465;';
+      trashButton.addEventListener('click', () => {
+        category.links.splice(index, 1);
+        saveCategories();
+        displayCategories();
+      });
+      linkDiv.appendChild(linkA);
+      linkDiv.appendChild(linkDesc);
+      linkDiv.appendChild(trashButton);
+      categoryLinksDiv.appendChild(linkDiv);
+    });
+    categoryDiv.appendChild(categoryLinksDiv);
+    categoryTitle.addEventListener('click', () => {
+      category.expanded = !category.expanded;
+      saveCategories();
+      displayCategories();
+    });
+    categoriesContainer.appendChild(categoryDiv);
+  });
+}
+
+expandDiv.style.display = 'none';
 
 expandButton.addEventListener('click', () => {
   if (expandDiv.style.display === 'block') {
     expandDiv.style.display = 'none';
   } else {
     expandDiv.style.display = 'block';
-    expandDiv.style.height = expandDiv.scrollHeight + 'px';
   }
 });
 
@@ -89,5 +74,67 @@ closeButton.addEventListener('click', () => {
   expandDiv.style.display = 'none';
 });
 
+function addLinkToCategory(category, link) {
+  category.links.push(link);
+  saveCategories();
+  displayCategories();
+}
+
+function init() {
+  const storedCategories = localStorage.getItem('categories');
+  if (storedCategories) {
+    categories = JSON.parse(storedCategories);
+    displayCategories();
+  }
+}
+
+const form = document.querySelector('form');
+const nameInput = document.getElementById('name');
+const urlInput = document.getElementById('url');
+const iconButton = document.getElementById('get-icon');
+const descriptionInput = document.getElementById('description');
+const deleteCategoryButton = document.getElementById('delete-category');
+
+iconButton.addEventListener('click', () => {
+	const url = urlInput.value.trim();
+	if (url) {
+	  const linkImg = document.createElement('img');
+	  linkImg.src = `https://www.google.com/s2/favicons?domain=${url}&s=32`; // Specify a larger size (64x64)
+	  linkImg.style.height = '32px'; // Set the height to match the specified size
+	  linkImg.style.marginRight = '10px'; // Set the right margin
+	  iconButton.innerHTML = '';
+	  iconButton.appendChild(linkImg);
+	}
+  });
+  
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  const categoryName = categoryNameInput.value;
+  const name = nameInput.value;
+  const url = urlInput.value;
+  const icon = iconButton.querySelector('img').src;
+  const description = descriptionInput.value;
+  if (
+    categoryName.trim() &&
+    name.trim() &&
+    url.trim() &&
+    icon.trim() &&
+    description.trim()
+  ) {
+    let category = categories.find(cat => cat.name === categoryName);
+    if (!category) {
+      category = { name: categoryName, links: [], expanded: true };
+      categories.push(category);
+      populateCategoryDropdown();
+    }
+    const link = { name, url, icon, description };
+    addLinkToCategory(category, link);
+    nameInput.value = '';
+    urlInput.value = '';
+    iconButton.innerHTML = 'Get Icon';
+    descriptionInput.value = '';
+  }
+});
 
 init();

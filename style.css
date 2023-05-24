@@ -1,6 +1,25 @@
+/* CSS for Categories */
+#categories-container {
+  	display: flex;
+  	flex-direction: column;
+}
+
+/* CSS for Links */
+.link {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  background-color: #b9c6be;
+  font-family: 'Heebo', sans-serif;
+  border: 3px solid #122509;
+  box-shadow: 0.1em 0.1em;
+  border-radius: 0.4em;
+
+}
+
 body {
 	font-family: 'Heebo', sans-serif;
-	background-color: #ABC3C2;
+	background-color: #c7d1cb;
 	background-size: 100% 100%;
 	animation: gradient 15s ease infinite;
 	height: 100vh;
@@ -8,7 +27,6 @@ body {
 
 h1 {
 	color: #2b2b2b;
-	/* font-family: 'Arvo', serif; */
 	font-family: 'Heebo', sans-serif;
 	font-size: 60px;
 	padding-left: 10px;
@@ -18,14 +36,9 @@ a {
 	font-weight: 900;
 }
 
-/* a:hover {
-	color: #ffffff;
-} */
-
 #links-container {
 	display: flex;
 	flex-wrap: wrap;
-	/* font-family: 'Arvo', serif; */
 	font-family: 'Heebo', sans-serif;
 	
 }
@@ -42,24 +55,10 @@ a {
 	bottom: 18px;
 }
 
-
-.link {
-	margin: 10px;
-	padding: 10px;
-	background-color: #ABC3B6;
-	/* border-radius: 5px; */
-	font-family: 'Heebo', sans-serif;
-	border: 3px solid black;
-	box-shadow: 0.1em 0.1em;
-	border-radius: 0.4em;
-
-}
-
 .link a {
 	display: flex;
 	align-items: center;
 	color: #2b2b2b;
-	text-decoration: none;
 	font-family: 'Heebo', sans-serif;
 }
 
@@ -98,7 +97,6 @@ a {
   }
 
   #input-div {
-	--bg-color: #fff;
 	padding: 20px;
 	background: #abb8c3;
 	display: flex;
@@ -112,7 +110,7 @@ a {
 	top: 90px;
 	right: 20px;
 	width: 200px;
-	height: 280px;
+	height: 335px;
   }
 
   .input-container {
@@ -188,7 +186,7 @@ a {
 	transition: all 0.5s;
   }
 
-  #get-icon, #submit{
+  #get-icon, #submit, #close{
 	background: #abb8c3;
 	font-family: inherit;
 	font-weight: 900;
@@ -207,4 +205,8 @@ a {
 	transform: translate(-0.05em, -0.05em);
 	box-shadow: 0.15em 0.15em;
   }
-  
+
+  #close:hover {
+	transform: translate(-0.05em, -0.05em);
+	box-shadow: 0.15em 0.15em;
+  }
