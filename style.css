@@ -1,3 +1,11 @@
+*::-webkit-scrollbar{
+    display: none;
+  }
+
+*{
+	font-family: 'Heebo', sans-serif;
+}
+  
 /* CSS for Categories */
 #categories-container {
   	display: flex;
@@ -9,12 +17,12 @@
   display: inline-block;
   margin: 10px;
   padding: 10px;
-  background-color: #b9c6be;
+  color: var(--color-text);
   font-family: 'Heebo', sans-serif;
   border: 3px solid #122509;
   box-shadow: 0.1em 0.1em;
-  border-radius: 0.4em;
-
+  border-radius: 10px;
+  background-color: var(--color-secondary);;
 }
 
 .link:hover {
@@ -22,18 +30,29 @@
 	box-shadow: 0.15em 0.15em;
   }
 
+.link >a >img {
+	margin-right: 10px;
+}
+
 body {
 	font-family: 'Heebo', sans-serif;
-	background-color: #c7d1cb;
+	background-color: var(--color-background);
 	background-size: 100% 100%;
 	animation: gradient 15s ease infinite;
 	height: 100vh;
 }
 
 h1 {
-	color: #2b2b2b;
+	color: var(--color-text);
 	font-family: 'Heebo', sans-serif;
 	font-size: 60px;
+	padding-left: 10px;
+}
+
+h2 {
+	color: var(--color-text);
+	font-family: 'Heebo', sans-serif;
+	font-size: 40px;
 	padding-left: 10px;
 }
 
@@ -49,7 +68,7 @@ a {
 }
 
 #input-text {
-	color: #2b2b2b;
+	color: var(--color-text);
 	font-family: 'Heebo', sans-serif;
 }
 
@@ -58,40 +77,89 @@ a {
 	margin-bottom: 40px;
 	position: sticky; 
 	bottom: 18px;
+	padding: 20px;
+	background: var(--color-primary);
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 20px;
+	border: 3px solid black;
+	box-shadow: 0.1em 0.1em;
+	border-radius: 10px;
+	position: fixed;
+	top: 90px;
+	right: 20px;
+	width: 200px;
+	height: 405px;
+}
+
+#setting-div {
+	top: 20px;
+	bottom: 20px;
+	right: 19px;
+	background: var(--color-secondary);
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 20px;
+	border: 3px solid black;
+	box-shadow: 0.1em 0.1em;
+	border-radius: 10px;
+	position: fixed;
+	width: 400px;
+	overflow-y: scroll;
+	display: flex;
+	align-items: center;
 }
 
 .link a {
 	display: flex;
 	align-items: center;
-	color: #2b2b2b;
+	color: var(--color-text);
 	font-family: 'Heebo', sans-serif;
 }
 
 	.link img {
-	height: 30px;
-	margin-right: 10px;
+	height: 25px;
 }
 
   #expand-button {
 	position: fixed;
 	top: 20px;
 	right: 20px;
-	background: #abb8c3;
+	background: var(--color-primary);
 	font-family: inherit;
 	padding: 0.6em 1.3em;
 	font-weight: 900;
 	font-size: 18px;
 	border: 3px solid black;
-	border-radius: 0.4em;
+	border-radius: 10px;
 	box-shadow: 0.1em 0.1em;
   }
+
+  #setting-button {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background: var(--color-primary);
+	font-family: inherit;
+	padding: 0.6em 1.3em;
+	font-weight: 900;
+	font-size: 18px;
+	border: 3px solid black;
+	border-radius: 10px;
+	box-shadow: 0.1em 0.1em;
+  }
+
+  #setting-close {
+	margin-bottom: 10px;
+  }
   
-  #expand-button:hover {
+  #expand-button:hover,  #setting-button:hover{
 	transform: translate(-0.05em, -0.05em);
 	box-shadow: 0.15em 0.15em;
   }
   
-  #expand-button:active {
+  #expand-button:active,  #setting-button:active {
 	transform: translate(0.05em, 0.05em);
 	box-shadow: 0.05em 0.05em;
   }
@@ -99,23 +167,6 @@ a {
   #close-button {
 	display: block;
 	margin-bottom: 10px;
-  }
-
-  #input-div {
-	padding: 20px;
-	background: #abb8c3;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 20px;
-	border: 3px solid black;
-	box-shadow: 0.1em 0.1em;
-	border-radius: 0.4em;
-	position: fixed;
-	top: 90px;
-	right: 20px;
-	width: 200px;
-	height: 335px;
   }
 
   .input-container {
@@ -128,13 +179,13 @@ a {
 	padding: 10px;
 	height: 4px;
 	width: 180px;
-	border: 2px solid #0B2447;
+	border: 2px solid #2b2b2b;
 	border-top: none;
 	border-bottom: none;
 	font-size: 16px;
 	background: transparent;
 	outline: none;
-	box-shadow: 7px 7px 0px 0px #0B2447;
+	box-shadow: 7px 7px 0px 0px #2b2b2b;
 	transition: all 0.5s;
   }
   
@@ -147,7 +198,7 @@ a {
 	position: absolute;
 	top: 10px;
 	left: 10px;
-	color: #0B2447;
+	color: var(--color-text);
 	transition: all 0.5s;
 	transform: scale(0);
 	z-index: -1;
@@ -156,7 +207,7 @@ a {
   .input-container .topline {
 	position: absolute;
 	content: "";
-	background-color: #0B2447;
+	background-color: var(--color-secondary);
 	width: 0%;
 	height: 2px;
 	right: 0;
@@ -172,7 +223,7 @@ a {
   .input-container .underline {
 	position: absolute;
 	content: "";
-	background-color: #0B2447;
+	background-color: var(--color-text);
 	width: 0%;
 	height: 2px;
 	right: 0;
@@ -191,37 +242,245 @@ a {
 	transition: all 0.5s;
   }
 
-  #get-icon, #submit, #close, .delete-button{
-	background: #abb8c3;
+  #get-icon, #submit, #close, #setting-close, #image-upload {
+	background: var(--color-primary);
 	font-family: inherit;
 	font-weight: 900;
 	font-size: 15px;
 	border: 3px solid black;
-	border-radius: 0.4em;
+	border-radius: 10px;
 	box-shadow: 0.1em 0.1em;
   }
 
-  #get-icon:hover {
+  #get-icon:hover, #close:hover, #submit:hover, .delete-button:hover, .yesButton:hover, .noButton:hover, #setting-close:hover, .upload-button:hover, #button:hover{
 	transform: translate(-0.05em, -0.05em);
 	box-shadow: 0.15em 0.15em;
   }
 
-  #submit:hover {
-	transform: translate(-0.05em, -0.05em);
-	box-shadow: 0.15em 0.15em;
-  }
-
-  #close:hover {
-	transform: translate(-0.05em, -0.05em);
-	box-shadow: 0.15em 0.15em;
-  }
-
-  .delete-button:hover {
-	transform: translate(-0.05em, -0.05em);
-	box-shadow: 0.15em 0.15em;
+  #button {
+	margin-top: 5px;
   }
 
   .expand-image {
 	width: 25px;
-
   }
+
+  .delete-button, .trashButton, .noButton, .yesButton, .upload-button, #image-upload, #fileInput, #button {
+	background: var(--color-primary);
+	font-family: inherit;
+	font-weight: 900;
+	font-size: 15px;
+	border: 3px solid black;
+	border-radius: 10px;
+	box-shadow: 0.1em 0.1em;
+	margin-left: 0px;
+  }
+
+  h2 >button >img {
+	height: 25px;
+	margin-top: 5px;
+  }
+
+  div >div >button >img {
+	margin-top: 5px;
+  }
+
+  #category-dropdown {
+	background: var(--color-primary);
+	font-family: inherit;
+	font-weight: 900;
+	font-size: 15px;
+	border: 3px solid black;
+	border-radius: 10px;
+	box-shadow: 0.1em 0.1em;
+	margin-left: 0px;
+  }
+
+  .popup {
+	padding: 10px;
+	border-radius: 10px;
+	background-color: rgb(255, 119, 119);
+	border: 3px solid black;
+	border-radius: 10px;
+	box-shadow: 0.1em 0.1em;
+  }
+  
+  /* Setting div */
+  .widget {
+	width: 300px;
+	padding: 20px;
+	padding-top: 0px;
+	padding-bottom: 5px;
+  }
+  
+  .header {
+	display: flex;
+	align-items: center;
+  }
+  
+  .icon {
+	width: 20px;
+	height: 20px;
+  }
+  
+  .customize-text {
+	margin-left: 10px;
+  }
+  
+  .section-title {
+	font-size: 18px;
+	margin-top: 20px;
+  }
+  
+  .rounded-image {
+	width: 360px;
+	border-radius: 10px;
+  }
+  
+  .upload-button {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	margin-top: 10px;
+	cursor: pointer;
+  }
+  
+  .appearance {
+	margin-top: 10px;
+	padding-left: 20px;
+  }
+
+  #image-preview {
+	width: 360px;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 10px;
+  }
+
+  .widget .circle {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	border: none;
+	margin: 5px;
+  }
+
+/* Default color values */
+:root {
+  --color-text: #2b2b2b;
+  --color-background: #b9c6be;
+  --color-primary: #abb8c3;
+  --color-secondary: #abb8c3;
+}
+/* var(--color-background); */
+
+/* Theme-specific CSS classes */
+.theme-dark {
+	--color-text: #000000;
+	--color-background: #4d4d4d;
+	--color-primary: #B787F7;
+	--color-secondary: #969696;
+}
+
+.theme-light {
+	--color-text: #2b2b2b;
+	--color-background: #e9e9e9;
+	--color-primary: #E1E1E1;
+	--color-secondary: #F7F7F7;
+}
+
+.theme-1 {
+	--color-text: #2b2b2b;
+	--color-background: #b9c6be;
+	--color-primary: #abb8c3;
+	--color-secondary: #abb8c3;
+}
+
+.theme-2 {
+	--color-text: #000000;
+	--color-background: #fbf6e4;
+	--color-primary: #1dd3a5;
+	--color-secondary: #f8ecc9;
+}
+
+.theme-3 {
+	--color-text: #120603;
+	--color-background: #ffffff;
+	--color-primary: #1f9fc7;
+	--color-secondary: #fbeae5;
+}
+
+.theme-4 {
+	--color-text: #10090e;
+	--color-background: #f6eff3;
+	--color-primary: #975983;
+	--color-secondary: #e8d8e3;
+}
+
+.theme-5 {
+	--color-text: #010403;
+	--color-background: #def2ec;
+	--color-primary: #542965;
+	--color-secondary: #f8fcfb;
+}
+
+.theme-6 {
+	--color-text: #110e09;
+	--color-background: #ede9de;
+	--color-primary: #74653e;
+	--color-secondary: #f8f6f2;
+}
+
+.theme-7 {
+	--color-text: #f8d3dd;
+	--color-background: #1a040a;
+	--color-primary: #8cedd3;
+	--color-secondary: #2c0711;
+}
+.theme-8 {
+	--color-text: #1c1703;
+	--color-background: #fffefa;
+	--color-primary: #0d7d68;
+	--color-secondary: #ffffff;
+}
+.theme-9 {
+	--color-text: #010902;
+	--color-background: #ffffff;
+	--color-primary: #7e1073;
+	--color-secondary: #e8fcea;
+}
+.theme-10 {
+	--color-text: #030203;
+	--color-background: #e9e1ea;
+	--color-primary: #9b78a1;
+	--color-secondary: #ded2e0;
+}
+.theme-11 {
+	--color-text: #0a0100;
+	--color-background: #fed5d2;
+	--color-primary: #05bac7;
+	--color-secondary: #fff1f0;
+}
+.theme-12 {
+	--color-text: #241504;
+	--color-background: #ffffff;
+	--color-primary: #149f5e;
+	--color-secondary: #fcf3e8;
+}
+
+
+  
+  /* Style the buttons */
+  .widget .circle {
+	cursor: pointer;
+  }
+  
+  
+  input[type="checkbox"] {
+	margin-top: 10px;
+  }
+  
+  label {
+	margin-left: 5px;
+  }
+  

@@ -17,6 +17,8 @@
 	</div>
 
 	<button id="expand-button">Add Link</button>
+
+	<button id="setting-button">Settings</button>
   
 	<div id="categories-container"></div>
 
@@ -24,13 +26,17 @@
 		<div id="input-div">
 			<form id="input-text">
 				<label for="category-name">Category Name:</label>
+				<img src="images/counter/counter_1_FILL0_wght400_GRAD0_opsz48.png" height="13px">
+				<select id="category-dropdown"></select>				
 				<div class="input-container">
-					<input class="input" type="text" id="category-name">
+					<input type="text" class="input" id="category-name" placeholder="Add New Category">
+					<!-- <input class="input" type="text" id="category-name"> -->
 					<label class="label" for="input"></label>
 					<div class="topline"></div>
 					<div class="underline"></div>
 				</div>
 				<label for="name">Name:</label>
+				<img src="images/counter/counter_2_FILL0_wght400_GRAD0_opsz48.png" height="13px">
 				<div class="input-container">
 					<input class="input" type="text" id="name">
 					<label class="label" for="input"></label>
@@ -38,14 +44,17 @@
 					<div class="underline"></div>
 				</div>
 				<label for="url">URL:</label>
+				<img src="images/counter/counter_3_FILL0_wght400_GRAD0_opsz48.png" height="13px">
 				<div class="input-container">
 					<input class="input" type="url" id="url">
 					<label class="label" for="input"></label>
 					<div class="topline"></div>
 					<div class="underline"></div>
 				</div>
-				<button type="button" id="get-icon">Get Icon</button>
+				<button type="button" id="get-icon">Get Icon</button> 
+				<img src="images/counter/counter_4_FILL0_wght400_GRAD0_opsz48.png" height="13px"><br>
 				<label for="description">Description:</label>
+				<img src="images/counter/counter_5_FILL0_wght400_GRAD0_opsz48.png" height="13px">
 				<div class="input-container">
 					<input class="input" type="text" id="description">
 					<label class="label" for="input"></label>
@@ -58,6 +67,52 @@
 		</div>
 	</div> 
 
+	<div id="expand-setting-div">
+		<div id="setting-div">
+			<div class="appearance">
+				<button type="close" id="setting-close">Close</button> <br>
+				<img src="images/edit_FILL0_wght400_GRAD0_opsz48.png" alt="Pen" class="icon">
+				<span class="customize-text">Customize</span>
+				<h2 class="section-title">Appearance</h2>
+				<img id="image-preview" src="" alt="Image" class="rounded-image">
+				<input type="file" id="image-upload" accept="image/*">
+			</div>
+			<div class="widget">
+				<div class="header">
+				  Themes:
+				</div>
+				<div class="circle-row">
+					<button class="circle theme-1" style="background-color: #b9c6be;"></button>
+					<button class="circle theme-2" style="background-color: #1dd3a5;"></button>
+					<button class="circle theme-3" style="background-color: #1f9fc7;"></button>
+					<button class="circle theme-4" style="background-color: #975983;"></button>
+				</div>
+				<div class="circle-row">
+					<button class="circle theme-5" style="background-color: #542965;"></button>
+					<button class="circle theme-6" style="background-color: #74653e;"></button>
+					<button class="circle theme-7" style="background-color: #f8d3dd;"></button>
+					<button class="circle theme-8" style="background-color: #0d7d68;"></button>
+				</div>
+				<div class="circle-row">
+					<button class="circle theme-9" style="background-color: #7e1073;"></button>
+					<button class="circle theme-10" style="background-color: #9b78a1;"></button>
+					<button class="circle theme-11" style="background-color: #fed5d2;"></button>
+					<button class="circle theme-12" style="background-color: #149f5e;"></button>
+				</div>
+				<div>
+					<input type="checkbox" id="darkModeCheckbox">
+					<label for="darkModeCheckbox">Dark Mode</label>
+				  </div>
+			</div>
+
+			<div>
+				<input type="file" id="fileInput" />
+				<br>
+				<button id="button" onclick="uploadLocalStorage()" title="Upload Links From File">Upload</button>
+				<button id="button" onclick="downloadLocalStorage()" title="Download Current Links">Download</button>
+			</div>
+		</div>
+	</div>
 	<script src="script.js"></script>
 </body>
 </html>
