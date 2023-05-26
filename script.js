@@ -26,11 +26,27 @@ function populateCategoryDropdown() {
 
 function displayCategories() {
   categoriesContainer.innerHTML = '';
+
+  const leftContainer = document.createElement('div');
+  leftContainer.classList.add('column-container', 'left-container');
+
+  const rightContainer = document.createElement('div');
+  rightContainer.classList.add('column-container', 'right-container');
+
+  const leftColumn = document.createElement('div');
+  leftColumn.classList.add('column', 'left-column');
+
+  const rightColumn = document.createElement('div');
+  rightColumn.classList.add('column', 'right-column');
+
   categories.forEach(category => {
-    const categoryDiv = document.createElement('div');
-    categoryDiv.classList.add('category');
     const categoryTitle = document.createElement('h2');
     categoryTitle.textContent = category.name;
+    categoryTitle.addEventListener('click', () => {
+      category.expanded = !category.expanded;
+      saveCategories();
+      displayCategories();
+    });
 
     // Add image for category expansion
     const expandImage = document.createElement('img');
@@ -39,60 +55,147 @@ function displayCategories() {
     categoryTitle.appendChild(expandImage);
 
     const deleteButton = document.createElement('button');
-    deleteButton.classList.add('delete-button');
+    deleteButton.classList.add('delete-category-button');
     deleteButton.innerHTML = '<img src="images/local_fire_department_FILL0_wght400_GRAD0_opsz48.png" alt="Delete" title="Delete Category">';
+    deleteButton.addEventListener('click', () => {
+      showDeleteConfirmation(category);
+    });
+
+    // Hide delete button if the category is not expanded
+    if (!category.expanded) {
+      deleteButton.style.display = 'none';
+    }
+
     categoryTitle.appendChild(deleteButton);
 
-    const categoryLinksDiv = document.createElement('div');
-    categoryLinksDiv.classList.add('category-links');
+    leftColumn.appendChild(categoryTitle);
+
     if (category.expanded) {
-      categoryLinksDiv.style.display = 'block';
-      deleteButton.style.display = 'block'; // Show delete button when category is expanded
-    } else {
-      categoryLinksDiv.style.display = 'none';
-      deleteButton.style.display = 'none'; // Hide delete button when category is not expanded
-    }
-    category.links.forEach((link, index) => {
-      const linkDiv = document.createElement('div');
-      linkDiv.classList.add('link');
-      const linkA = document.createElement('a');
-      linkA.href = link.url;
-      linkA.target = '_blank'; // Added target attribute
-      const linkImg = document.createElement('img');
-      linkImg.src = `https://www.google.com/s2/favicons?domain=${link.url}`;
-      linkA.appendChild(linkImg);
-      linkA.innerHTML += link.name;
-      const linkDesc = document.createElement('p');
-      linkDesc.innerHTML = link.description;
-      const trashButton = document.createElement('button');
-      trashButton.classList.add('delete-button');
-      trashButton.innerHTML = '<img src="images/delete_FILL0_wght400_GRAD0_opsz48 (1).png" alt="Delete" title="Delete Card">';
-      trashButton.addEventListener('click', () => {
-        showDeleteConfirmation(category, index); // Show delete confirmation popup
+      const categoryLinksDiv = document.createElement('div');
+      categoryLinksDiv.classList.add('category-links');
+
+      category.links.forEach((link, index) => {
+        const linkDiv = document.createElement('div');
+        linkDiv.classList.add('link');
+        const linkA = document.createElement('a');
+        linkA.href = link.url;
+        linkA.target = '_blank';
+        const linkImg = document.createElement('img');
+        linkImg.src = `https://www.google.com/s2/favicons?domain=${link.url}`;
+        linkA.appendChild(linkImg);
+        linkA.innerHTML += link.name;
+        const linkDesc = document.createElement('p');
+        linkDesc.innerHTML = link.description;
+        const trashButton = document.createElement('button');
+        trashButton.classList.add('delete-button');
+        trashButton.innerHTML = '<img src="images/delete_FILL0_wght400_GRAD0_opsz48 (1).png" alt="Delete" title="Delete Card">';
+        trashButton.addEventListener('click', () => {
+          deleteLink(category, index);
+        });
+        linkDiv.appendChild(linkA);
+        linkDiv.appendChild(linkDesc);
+        linkDiv.appendChild(trashButton);
+        categoryLinksDiv.appendChild(linkDiv);
       });
-      linkDiv.appendChild(linkA);
-      linkDiv.appendChild(linkDesc);
-      linkDiv.appendChild(trashButton);
-      categoryLinksDiv.appendChild(linkDiv);
-    });
-    categoryDiv.appendChild(categoryTitle);
-    categoryDiv.appendChild(categoryLinksDiv);
-    categoryTitle.addEventListener('click', () => {
-      category.expanded = !category.expanded;
-      saveCategories();
-      displayCategories();
-    });
 
-    // Delete category button event listener
-    deleteButton.addEventListener('click', () => {
-      showDeleteConfirmation(category); // Show delete confirmation popup
-    });
-
-    categoriesContainer.appendChild(categoryDiv);
+      rightColumn.appendChild(categoryLinksDiv);
+    }
   });
 
-  populateCategoryDropdown(); // Populate the category dropdown
+  leftContainer.appendChild(leftColumn);
+  rightContainer.appendChild(rightColumn);
+
+  categoriesContainer.appendChild(leftContainer);
+  categoriesContainer.appendChild(rightContainer);
+
+  populateCategoryDropdown();
 }
+
+function showDeleteConfirmation(category) {
+  // Prompt the user for confirmation or display a dialog
+  const confirmDelete = confirm("Are you sure you want to delete this category?");
+
+  if (confirmDelete) {
+    // Remove the category from the categories array
+    const categoryIndex = categories.indexOf(category);
+    if (categoryIndex > -1) {
+      categories.splice(categoryIndex, 1);
+    }
+    // Save the updated categories to local storage
+    saveCategories();
+    // Refresh the displayed categories
+    displayCategories();
+  }
+}
+
+function deleteLink(category, linkIndex) {
+  // Remove the link from the category's links array
+  category.links.splice(linkIndex, 1);
+  // Save the updated categories to local storage
+  saveCategories();
+  // Refresh the displayed categories
+  displayCategories();
+}
+
+function saveCategories() {
+  // Save the categories to local storage
+  localStorage.setItem('categories', JSON.stringify(categories));
+}
+
+function showDeleteConfirmation(category) {
+  // Prompt the user for confirmation or display a dialog
+  const confirmDelete = confirm("Are you sure you want to delete this category?");
+
+  if (confirmDelete) {
+    // Remove the category from the categories array
+    const categoryIndex = categories.indexOf(category);
+    if (categoryIndex > -1) {
+      categories.splice(categoryIndex, 1);
+    }
+    // Save the updated categories to local storage
+    saveCategories();
+    // Refresh the displayed categories
+    displayCategories();
+  }
+}
+
+function deleteLink(category, linkIndex) {
+  // Remove the link from the category's links array
+  category.links.splice(linkIndex, 1);
+  // Save the updated categories to local storage
+  saveCategories();
+  // Refresh the displayed categories
+  displayCategories();
+}
+
+function saveCategories() {
+  // Save the categories to local storage
+  localStorage.setItem('categories', JSON.stringify(categories));
+}
+
+
+function showDeleteConfirmation(category, linkIndex) {
+  // Prompt the user for confirmation or display a dialog
+  const confirmDelete = confirm("Are you sure you want to delete this link?");
+
+  if (confirmDelete) {
+    // Remove the link from the category's links array
+    category.links.splice(linkIndex, 1);
+    // Save the updated categories to local storage
+    saveCategories();
+    // Refresh the displayed categories
+    displayCategories();
+  }
+}
+
+function saveCategories() {
+  // Save the categories to local storage
+  localStorage.setItem('categories', JSON.stringify(categories));
+}
+
+
+
+
 
 function showDeleteConfirmation(category, linkIndex = null) {
   const popup = document.createElement('div');

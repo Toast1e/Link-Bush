@@ -74,7 +74,8 @@
 				<img src="images/edit_FILL0_wght400_GRAD0_opsz48.png" alt="Pen" class="icon">
 				<span class="customize-text">Customize</span>
 				<h2 class="section-title">Appearance</h2>
-				<img id="image-preview" src="" alt="Image" class="rounded-image">
+				<img id="image-preview" src="" alt="Image" class="rounded-image"> <br>
+				<span>Upload a Custom Image!</span>
 				<input type="file" id="image-upload" accept="image/*">
 			</div>
 			<div class="widget">
@@ -101,15 +102,17 @@
 				</div>
 				<div>
 					<input type="checkbox" id="darkModeCheckbox">
-					<label for="darkModeCheckbox">Dark Mode</label>
+					<label for="darkModeCheckbox"></label>
 				  </div>
 			</div>
 
-			<div>
+			<span>Sync Your Devices:</span>
+			<span class="explain">Download on one device, Upload on another device.</span>
+			<div class="upload">
 				<input type="file" id="fileInput" />
 				<br>
-				<button id="button" onclick="uploadLocalStorage()" title="Upload Links From File">Upload</button>
 				<button id="button" onclick="downloadLocalStorage()" title="Download Current Links">Download</button>
+				<button id="button" onclick="uploadLocalStorage()" title="Upload Links From File">Upload</button>
 			</div>
 		</div>
 	</div>
