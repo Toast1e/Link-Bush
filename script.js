@@ -418,19 +418,12 @@ if (savedBackgroundImage) {
 
 // Get all the theme buttons
 const themeButtons = document.querySelectorAll('.circle');
-// Get the dark mode checkbox element
-const darkModeCheckbox = document.getElementById('darkModeCheckbox');
 
 // Attach click event listeners to each theme button
 themeButtons.forEach((button, index) => {
   button.addEventListener('click', () => {
     applyTheme(index + 1);
   });
-});
-
-// Add event listener to the dark mode checkbox
-darkModeCheckbox.addEventListener('change', () => {
-  toggleDarkMode();
 });
 
 function applyTheme(themeNumber) {
@@ -442,9 +435,13 @@ function applyTheme(themeNumber) {
     // Remove the current theme class from the body element
     if (currentTheme !== -1) {
       body.classList.remove(`theme-${currentTheme}`);
+      // Remove border class from the previously selected theme button
+      themeButtons[currentTheme - 1].classList.remove('active');
     }
     // Add the selected theme class to the body element
     body.classList.add(`theme-${themeNumber}`);
+    // Add border class to the selected theme button
+    themeButtons[themeNumber - 1].classList.add('active');
     // Save the selected theme in local storage
     saveTheme(themeNumber);
   }
@@ -466,37 +463,15 @@ function saveTheme(themeNumber) {
   localStorage.setItem('selectedTheme', themeNumber);
 }
 
-function toggleDarkMode() {
-  const body = document.body;
-  const darkModeTheme = 'theme-dark';
-  const lightModeTheme = 'theme-light';
-
-  if (darkModeCheckbox.checked) {
-    // Remove light mode theme and apply dark mode theme
-    body.classList.remove(lightModeTheme);
-    body.classList.add(darkModeTheme);
-    // Save the selected theme in local storage
-    saveTheme(darkModeTheme);
-  } else {
-    // Remove dark mode theme and apply light mode theme
-    body.classList.remove(darkModeTheme);
-    body.classList.add(lightModeTheme);
-    // Save the selected theme in local storage
-    saveTheme(lightModeTheme);
-  }
-}
-
 // On page load, check if a theme is stored in local storage and apply it
 document.addEventListener('DOMContentLoaded', () => {
   const selectedTheme = localStorage.getItem('selectedTheme');
   if (selectedTheme) {
-    // If the selected theme is dark mode, check the checkbox
-    if (selectedTheme === 'theme-dark') {
-      darkModeCheckbox.checked = true;
-    }
     applyTheme(selectedTheme);
   }
 });
+
+
 
 
 

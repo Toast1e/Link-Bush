@@ -39,12 +39,14 @@
 body {
 	font-family: 'Heebo', sans-serif;
 	background-color: var(--color-background);
-	background-size: 100% 100%;
+	/* background-size: 100% 100%; */
 	animation: gradient 15s ease infinite;
-	height: 100vh;
+	height: 100%;
 	overflow-y: hidden;
-
 }
+html {
+	height: 100%;
+  }
 
 h1 {
 	color: var(--color-text);
@@ -492,10 +494,16 @@ a {
   }
 
   .column {
-	overflow-y: scroll;
-	height: 600px; /* Adjust the height as needed */
+	flex: 1;
+	overflow-y: auto;
+	margin-bottom: 100px;
   }
   
+  .column-container {
+	display: flex;
+	height: 100vh;
+  }
+
   .category-container {
 	position: sticky;
   }
@@ -517,6 +525,12 @@ a {
 
   .upload {
 	margin-bottom: 15px;
+  }
+
+  .active {
+	border: 3px solid;
+	box-shadow: 0.15em 0.15em;
+	border-radius: 10px;
   }
   
   
