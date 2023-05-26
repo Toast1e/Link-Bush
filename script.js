@@ -203,11 +203,14 @@ function uploadLocalStorage() {
       }
 
       alert('Local storage data uploaded successfully!');
+      location.reload(); // Refresh the page
     };
 
     reader.readAsText(file);
   }
 }
+
+
 
 
 function init() {
