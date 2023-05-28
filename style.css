@@ -525,6 +525,13 @@ a {
 	  }
 	  .left-column::-webkit-scrollbar, .right-column::-webkit-scrollbar{
 		display: none;
+		-webkit-appearance: none;
+		width: 0;
+		height: 0;
+	  }
+	  .left-column, .right-column {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 	  }
 
   }
@@ -651,7 +658,14 @@ a {
 	  }
 	.left-column::-webkit-scrollbar, .right-column::-webkit-scrollbar{
 	  display: none;
+	  -webkit-appearance: none;
+	  width: 0;
+	  height: 0;
 	}
+	.left-column, .right-column {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	  }
 	  
   }
   
@@ -675,6 +689,13 @@ a {
 	  }
 	  .left-column::-webkit-scrollbar, .right-column::-webkit-scrollbar{
 		display: none;
+		-webkit-appearance: none;
+		width: 0;
+		height: 0;
+	  }
+	  .left-column, .right-column {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 	  }
 	
 
@@ -696,6 +717,13 @@ a {
 	  }
 	  .left-column::-webkit-scrollbar, .right-column::-webkit-scrollbar{
 		display: none;
+		-webkit-appearance: none;
+		width: 0;
+		height: 0;
+	  }
+	  .left-column, .right-column {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 	  }
 	
 
