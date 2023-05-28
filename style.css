@@ -1,7 +1,3 @@
-*::-webkit-scrollbar{
-    display: none;
-  }
-
 *{
 	font-family: 'Heebo', sans-serif;
 }
@@ -522,6 +518,9 @@ a {
 		display: flex;
 		flex-direction: column;
 	  }
+	  body {
+		overflow-y: scroll;
+	  }
 
   }
   
@@ -665,6 +664,10 @@ a {
 		bottom: 10px;
 		overflow-y: scroll;
 	  }
+	  .left-column::-webkit-scrollbar, .right-column::-webkit-scrollbar{
+		display: none;
+	  }
+	
 
 	  /* NO FURTHER CHANGE */
   }
@@ -682,6 +685,10 @@ a {
 		right: 20px;
 		font-size: 18px;
 	  }
+	  .left-column::-webkit-scrollbar, .right-column::-webkit-scrollbar{
+		display: none;
+	  }
+	
 
 	  	  /* NO FURTHER CHANGE */
   }
