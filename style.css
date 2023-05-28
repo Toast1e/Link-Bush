@@ -121,6 +121,7 @@ a {
 }
 
   #expand-button {
+	color: #122509;
 	position: fixed;
 	background: var(--color-primary);
 	font-family: inherit;
@@ -132,6 +133,7 @@ a {
   }
 
   #setting-button {
+	color: #122509;
 	position: fixed;
 	background: var(--color-primary);
 	font-family: inherit;
@@ -521,6 +523,9 @@ a {
 	  body {
 		overflow-y: scroll;
 	  }
+	  .left-column::-webkit-scrollbar, .right-column::-webkit-scrollbar{
+		display: none;
+	  }
 
   }
   
@@ -644,6 +649,10 @@ a {
 		height: 50px;
 		width: 50px;
 	  }
+	.left-column::-webkit-scrollbar, .right-column::-webkit-scrollbar{
+	  display: none;
+	}
+	  
   }
   
   @media only screen and (min-width: 481px) and (max-width: 1024px) and (orientation: landscape) {
