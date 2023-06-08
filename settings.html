@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <style>
+    *{
+      font-family: 'Heebo', sans-serif;
+    }
+
+    h1 {
+	  font-family: 'Heebo', sans-serif;
+	  font-size: 60px;
+	  padding-left: 10px;
+	  margin: 10px;
+	}
+
+    h2 {
+      color: var(--theme1-color);
+    }
+
+    .add-card-button {
+      background-color: #f2f2f200;
+      border: none;
+      border-radius: 4px;
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-image: url("images/noise/noisy-texture-200x200-5.png");
+    }
+    
+    .navbar-left {
+      flex-grow: 1;
+      text-align: center;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-center {
+      flex-grow: 1;
+      text-align: center;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-search {
+      margin: 0 auto;
+    }
+    
+    .navbar-logo {
+      margin-right: 10px;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .navbar-menu {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+    }
+    
+    .navbar-link {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    
+    .navbar-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .navbar-dropdown-content {
+      display: none;
+      position: absolute;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    
+    .navbar-dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      cursor: pointer;
+    }
+    
+    .navbar-dropdown:hover .navbar-dropdown-content {
+      display: block;
+    }
+    
+    .navbar-icon {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    
+    .navbar-toggle {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .settings {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        justify-content: space-around;
+    }
+
+    .content {
+      margin: 10px;
+      border-radius: 10px;
+    }
+
+    .unsplash {
+        width: 30%;
+        border-radius: 10px;
+    }
+    .file {
+        width: 30%;
+        border-radius: 10px;
+    }
+
+    #search-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#search-input {
+  padding: 5px;
+  width: 300px;
+}
+
+#search-button {
+  padding: 5px 10px;
+}
+
+#results-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  /* overflow-y: scroll; */
+}
+
+.result {
+  width: calc(50% - 20px); /* Updated width to create two columns */
+  margin: 10px;
+  position: relative;
+}
+
+.result img {
+  max-width: 100%;
+}
+
+.result:hover .attribution {
+  display: block;
+}
+
+.attribution {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+}
+
+    #image-preview {
+      width: 360px;
+      height: 200px;
+      border: 3px solid black;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    
+    .theme {
+      background-color: var(--theme3-color);
+      opacity: var(--theme3-opacity);
+      width: 30%;
+      justify-content: space-around;
+    }
+
+    .link {
+	  display: inline-block;
+	  margin: 10px;
+	  padding: 10px;
+	  color: var(--color-text);
+	  font-family: 'Heebo', sans-serif;
+	  border: 3px solid #000000;
+	  box-shadow: 0.1em 0.1em;
+	  border-radius: 10px;
+	  min-width: 200px;
+	  min-height: 100px;
+    backdrop-filter: blur(2px);
+    }
+    
+    .link:hover {
+	  transform: translate(-0.05em, -0.05em);
+	  box-shadow: 0.15em 0.15em;
+    }
+    
+    .link a {
+	  display: flex;
+	  align-items: center;
+	  color: var(--color-text);
+	  font-family: 'Heebo', sans-serif;
+    }
+    
+    .link img {
+	  height: 25px;
+	  margin-right: 10px;
+    }
+
+    .category-name {
+      font-weight: bold;
+      top: 5px;
+    }
+
+    .category-links {
+      margin-top: 8px;
+      display: flex;
+  	  flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .category {
+      margin-bottom: 16px;
+      display: flex;
+  	  flex-direction: row;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 8px;
+      min-width: 110px;
+      backdrop-filter: blur(1px);
+    }
+
+    .settings-top {
+      display: flex;
+      align-self: center;
+    }
+
+    .settings-top >img  {
+      width: 30px;
+      height: 30px;
+    }
+
+    .settings-top >span  {
+      font-weight: 600;
+      padding-top: 7px;
+      padding-left: 10px;
+    }
+
+  .button {
+  /* Variables */
+  --button_radius: 10px;
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  backdrop-filter: blur(2px);
+}
+
+.button_top {
+  display: block;
+  box-sizing: border-box;
+  padding: 0.75em 1.5em;
+  background: var(--button_color);
+  color: var(--button_outline_color);
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+}
+
+.button:hover .button_top {
+  /* Pull the button upwards when hovered */
+  transform: translateY(-0.33em);
+}
+
+.button:active .button_top {
+  /* Push the button downwards when pressed */
+  transform: translateY(0);
+}
+
+.btn {
+  display: flex;
+  justify-content:space-around;
+}
+
+#pressbtn {
+    background-color: aliceblue;
+	font-weight: 900;
+	font-size: 15px;
+	border: 3px solid black;
+	border-radius: 10px;
+	box-shadow: 0.1em 0.1em;
+  }
+
+  #pressbtn:hover{
+	transform: translate(-0.05em, -0.05em);
+	box-shadow: 0.15em 0.15em;
+  }
+
+
+
+    #theme3, #theme4 {
+  position: relative;
+}
+
+#theme3::before,
+#theme4::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+#theme-styles {
+  display: none;
+}
+
+#theme-editor {
+  width: 100%;
+  height: 200px;
+  left: 0px;
+}
+
+    </style>
+    <body>
+        <div class="navbar" id="theme3">
+            <div class="navbar-left">
+              <div class="navbar-logo">
+                <a class="link-bush" href="index.html">
+                  <h2 style="margin: 0px;" id="theme1">                
+                    <img src="images/nature_FILL0_wght400_GRAD0_opsz48.png" alt="Website Icon" width="30px" height="30px">
+                      Link-Bush
+                    </h2>
+                  </a>
+                </div>
+            </div>
+            <div class="navbar-center">
+              <img src="images/settings_FILL0_wght400_GRAD0_opsz48.png" alt="Settings" width="24px" height="24px">
+              <a><h2 style="margin: 0px;" id="theme2">Settings</h2></a>
+            </div>
+            <div class="navbar-right">
+
+              <div class="navbar-icon">
+                <img src="images/storefront_FILL0_wght400_GRAD0_opsz48.png" alt="Shop" width="24px" height="24px">
+              </div>
+              <div>
+        
+                <a href="settings.html">
+                  <button class="add-card-button navbar-icon">
+                    <img src="images/settings_FILL0_wght400_GRAD0_opsz48.png" alt="Settings" width="24px" height="24px">
+                  </button>
+                </a>
+              </div>
+              <div class="navbar-icon">
+                <img src="images/account_circle_FILL0_wght400_GRAD0_opsz48.png" alt="Profile" width="24px" height="24px">
+              </div>
+            </div>
+        </div>
+      <div class="settings">
+        <div class="unsplash" id="theme4"> 
+          <div class="content">
+            <div class="settings-top">
+              <img src="images/icon/unsplash_logo_icon_206651.png" alt="Pen">
+              <h2 id="theme2" style="margin: 5px;">Search Unsplash</h2>
+            </div>
+            <div id="search-container">
+              <input type="text" id="search-input" placeholder="Search wallpapers">
+              <button id="search-button">Search</button>
+            </div>
+            <div style="color: #a0a0a0bd;"><h5>Coming Soon...</h5></div>
+            <div id="results-container"></div>
+          </div>
+        </div>
+        <div class="file" id="theme4"> 
+          <div class="content">
+              <div id="setting-div">
+                <div class="appearance">
+                  <div class="settings-top">
+                    <img src="images/edit_FILL0_wght400_GRAD0_opsz48.png" alt="Pen">
+                    <h2 id="theme2" style="margin: 5px;">Customize</h2>
+                  </div>
+                  <h3>Appearance</h3>
+                  <div style="width: 360px; margin: auto;">
+                    <img id="image-preview" src="" alt="Image" class="rounded-image"> <br>
+                  </div>
+                  <div style="padding: 0px;">
+                    <h4>Upload a Custom Image:</h4>
+                    <input class="button" type="file" id="image-upload" accept="image/*">
+                  </div>
+                </div>
+                <hr>
+                <div class="widget" style="padding: 0px;">
+                <h4>Sync Your Devices:</h4>
+                <span class="explain">Download your data from this device. <br> Upload the same file onto another device</span>
+                <br><br>
+                <div class="upload">
+                  <input class="button" type="file" id="fileInput" />
+                  <br>
+                  <br>
+                  <div class="btn">
+                    <div><button  id="pressbtn" onclick="downloadLocalStorage()" title="Download Current Links">Download</button></div>
+                    <div><button  id="pressbtn" onclick="uploadLocalStorage()" title="Upload Links From File">Upload</button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="theme" id="theme4">
+          <div class="content">
+            <div class="settings-top">
+              <img src="images/icon/palette_FILL0_wght400_GRAD0_opsz48.png" alt="Pen">
+              <h2 id="theme2" style="margin: 5px;">Theme</h2>
+            </div>
+              <div>
+                <style id="theme-styles"></style>
+                <div id="theme-editor">
+                  <h3>Theme Editor</h3>
+                  <input type="color" id="header1-color"> 
+                  <label for="header1-color">: Title Color</label><br>
+                  <input type="color" id="header2-color">
+                  <label for="header2-color">: Description Color</label><br>
+                  <input type="color" id="background1-color">
+                  <label for="background1-color">: Accent Background Color</label><br>
+                  <label for="background-opacity1">Accent Background Opacity :</label>
+                  <input type="range" id="background-opacity1" min="0" max="1" step="0.1" value="1"><br>
+                  <input type="color" id="background2-color">
+                  <label for="background2-color">: Main Background Color</label><br>
+                  <label for="background-opacity2">Main Background Opacity :</label>
+                  <input type="range" id="background-opacity2" min="0" max="1" step="0.1" value="1">
+                </div>
+              </div>
+              <hr>
+              <h3 id="theme1">Demo:</h3>
+              <div class="demo">
+                  <div class="category"><div class="category-header" id="theme3">
+                    <div class="category-name">category-</div>
+                  </div><div class="category-links"><div class="link" id="theme4"><h3><a id="theme1">
+                  <img src="images/nature_FILL0_wght400_GRAD0_opsz48.png">
+                  Title
+                </a></h3><p id="theme2">Discription</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        
+        <script>
+
+// const accessKey = '';
+// const searchInput = document.getElementById('search-input');
+// const searchButton = document.getElementById('search-button');
+// const resultsContainer = document.getElementById('results-container');
+
+// searchButton.addEventListener('click', () => {
+//   const query = searchInput.value;
+//   searchPhotos(query);
+// });
+
+// // Randomly load images when the page loads
+// window.addEventListener('load', () => {
+//   searchPhotos('random');
+// });
+
+// async function searchPhotos(query) {
+//   resultsContainer.innerHTML = '';
+
+//   let url;
+//   if (query === 'random') {
+//     url = `https://api.unsplash.com/photos/random?count=10&client_id=${accessKey}`;
+//   } else {
+//     url = `https://api.unsplash.com/search/photos?query=${query}&client_id=${accessKey}`;
+//   }
+
+//   try {
+//     const response = await fetch(url);
+//     const data = await response.json();
+    
+//     if (data.results) {
+//       data.results.forEach(photo => {
+//         const result = createResult(photo);
+//         resultsContainer.appendChild(result);
+//       });
+//     } else {
+//       data.forEach(photo => {
+//         const result = createResult(photo);
+//         resultsContainer.appendChild(result);
+//       });
+//     }
+//   } catch (error) {
+//     console.log('Error:', error);
+//   }
+// }
+
+// function createResult(photo) {
+//   const result = document.createElement('div');
+//   result.classList.add('result');
+
+//   const image = document.createElement('img');
+//   image.src = photo.urls.regular;
+//   image.alt = photo.alt_description;
+//   image.addEventListener('click', () => saveBackgroundImage(photo.urls.regular));
+//   result.appendChild(image);
+
+//   const attribution = document.createElement('p');
+//   attribution.classList.add('attribution');
+//   attribution.innerHTML = `Photo by <a href="${photo.user.links.html}" target="_blank">${photo.user.name}</a> on <a href="https://unsplash.com" target="_blank">Unsplash</a>`;
+//   result.appendChild(attribution);
+
+//   return result;
+// }
+
+// function saveBackgroundImage(imageUrl) {
+//   fetch(imageUrl)
+//     .then(response => response.blob())
+//     .then(blob => {
+//       const reader = new FileReader();
+//       reader.onloadend = () => {
+//         const base64data = reader.result;
+//         localStorage.setItem('backgroundImage', base64data);
+//         location.reload(); // Refresh the page
+//       };
+//       reader.readAsDataURL(blob);
+//     })
+//     .catch(error => {
+//       console.log('Error:', error);
+//     });
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // Function to handle the image upload
+  function handleImageUpload(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+  reader.onload = function (e) {
+    // Set the image as the background of the website
+    document.body.style.backgroundImage = `url(${e.target.result})`;
+    document.body.style.backgroundAttachment = 'fixed'; // Prevent scrolling of the background image
+    document.body.style.backgroundSize = 'cover'; // Maintain aspect ratio
+
+    // Display the uploaded image in the image-preview element
+    const imagePreview = document.getElementById('image-preview');
+    imagePreview.src = e.target.result;
+
+    // Save the image to local storage
+    localStorage.setItem('backgroundImage', e.target.result);
+  };
+
+  reader.readAsDataURL(file);
+}
+
+// Event listener for image upload button
+const imageUpload = document.getElementById('image-upload');
+imageUpload.addEventListener('change', handleImageUpload);
+
+// Check if a background image exists in local storage
+const savedBackgroundImage = localStorage.getItem('backgroundImage');
+if (savedBackgroundImage) {
+  // Set the saved image as the background of the website
+  document.body.style.backgroundImage = `url(${savedBackgroundImage})`;
+  document.body.style.backgroundAttachment = 'fixed';
+  document.body.style.backgroundSize = 'cover';
+
+  // Display the saved image in the image-preview element
+  const imagePreview = document.getElementById('image-preview');
+  imagePreview.src = savedBackgroundImage;
+}
+
+function downloadLocalStorage() {
+  const selectedKeys = ['backgroundImage', 'categories', 'themeSettings'];
+  const localStorageData = {};
+
+  for (const key of selectedKeys) {
+    if (localStorage.hasOwnProperty(key)) {
+      localStorageData[key] = localStorage.getItem(key);
+    }
+  }
+
+  const localStorageJSON = JSON.stringify(localStorageData);
+  const blob = new Blob([localStorageJSON], { type: 'application/json' });
+
+  const downloadLink = document.createElement('a');
+  downloadLink.href = URL.createObjectURL(blob);
+  downloadLink.download = 'local_storage_data.json';
+  downloadLink.click();
+}
+
+
+function uploadLocalStorage() {
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const localStorageData = e.target.result;
+      const parsedData = JSON.parse(localStorageData);
+
+      for (const key in parsedData) {
+        localStorage.setItem(key, parsedData[key]);
+      }
+
+      alert('Local storage data uploaded successfully!');
+      location.reload();
+    };
+
+    reader.readAsText(file);
+  }
+}
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  const header1ColorInput = document.getElementById("header1-color");
+  const header2ColorInput = document.getElementById("header2-color");
+  const background1ColorInput = document.getElementById("background1-color");
+  const background2ColorInput = document.getElementById("background2-color");
+  const backgroundOpacityInput1 = document.getElementById("background-opacity1");
+  const backgroundOpacityInput2 = document.getElementById("background-opacity2");
+  const themeStyles = document.getElementById("theme-styles");
+
+  // Load theme settings from local storage
+  const savedThemeSettings = JSON.parse(localStorage.getItem("themeSettings")) || {};
+
+  // Update theme inputs and styles with saved settings
+  header1ColorInput.value = savedThemeSettings.header1Color || "#000000";
+  header2ColorInput.value = savedThemeSettings.header2Color || "#000000";
+  background1ColorInput.value = savedThemeSettings.background1Color || "#ffffff";
+  background2ColorInput.value = savedThemeSettings.background2Color || "#ffffff";
+  backgroundOpacityInput1.value = savedThemeSettings.backgroundOpacity1 || "1";
+  backgroundOpacityInput2.value = savedThemeSettings.backgroundOpacity2 || "1";
+
+  function updateTheme() {
+    const header1Color = header1ColorInput.value;
+    const header2Color = header2ColorInput.value;
+    const background1Color = background1ColorInput.value;
+    const background2Color = background2ColorInput.value;
+    const backgroundOpacity1 = backgroundOpacityInput1.value;
+    const backgroundOpacity2 = backgroundOpacityInput2.value;
+
+    const css = `
+      #theme1 {
+        color: ${header1Color};
+      }
+
+      #theme2 {
+        color: ${header2Color};
+      }
+
+      #theme3::before {
+        background-color: ${background1Color};
+        opacity: ${backgroundOpacity1};
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      #theme4::before {
+        background-color: ${background2Color};
+        opacity: ${backgroundOpacity2};
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+    `;
+
+    // Update theme styles
+    themeStyles.textContent = css;
+
+    // Save theme settings to local storage
+    const themeSettings = {
+      header1Color,
+      header2Color,
+      background1Color,
+      background2Color,
+      backgroundOpacity1,
+      backgroundOpacity2,
+    };
+    localStorage.setItem("themeSettings", JSON.stringify(themeSettings));
+  }
+
+  header1ColorInput.addEventListener("input", updateTheme);
+  header2ColorInput.addEventListener("input", updateTheme);
+  background1ColorInput.addEventListener("input", updateTheme);
+  background2ColorInput.addEventListener("input", updateTheme);
+  backgroundOpacityInput1.addEventListener("input", updateTheme);
+  backgroundOpacityInput2.addEventListener("input", updateTheme);
+
+  updateTheme();
+});
+
+
+        </script>
+    </body>
+  </html>

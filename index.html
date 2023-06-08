@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LinkBush#2</title>
+  <style>
+    *::-webkit-scrollbar{
+    display: none;
+  }
+    *{
+      font-family: 'Heebo', sans-serif;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .navbar-left {
+      flex-grow: 1;
+      text-align: center;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-center {
+      flex-grow: 1;
+      text-align: center;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-search {
+      margin: 0 auto;
+    }
+    
+    .navbar-logo {
+      margin-right: 10px;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .navbar-menu {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+    }
+    
+    .navbar-link {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    
+    .navbar-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .navbar-dropdown-content {
+      display: none;
+      position: absolute;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    
+    .navbar-dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      cursor: pointer;
+    }
+    
+    .navbar-dropdown:hover .navbar-dropdown-content {
+      display: block;
+    }
+    
+    .navbar-icon {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    
+    .navbar-search {
+      margin: 0 10px;
+    }
+
+    #search-input {
+      /* width: 250px;
+      height: 40px; */
+      border-radius: 10px;
+      border: 3px solid black;
+      box-shadow: 1px 1px black;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 5px 10px;
+      outline: none;
+    }
+    
+    .navbar-toggle {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    h1 {
+	  color: var(--color-text);
+	  font-family: 'Heebo', sans-serif;
+	  font-size: 60px;
+	  padding-left: 10px;
+	  margin: 10px;
+	}
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .column {
+      flex: 1;
+    }
+
+    .category {
+      margin-bottom: 16px;
+      display: flex;
+  	  flex-direction: row;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 0px;
+      min-width: 110px;
+      backdrop-filter: blur(1px);
+    }
+
+    .delete-button {
+      position: relative;
+      bottom: 0;
+      right: 0;
+      height: 16px;
+      width: 16px;
+      margin: 10px;
+      background-image: url("images/delete_FILL0_wght400_GRAD0_opsz48 (1).png");
+      background-size: cover;
+      cursor: pointer;
+    }
+
+    .category-name {
+      font-weight: bold;
+      top: 5px;
+    }
+
+    .category-links {
+      margin-top: 8px;
+      display: flex;
+  	  flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .link {
+	  display: inline-block;
+	  margin: 10px;
+	  padding: 10px;
+	  color: var(--color-text);
+	  font-family: 'Heebo', sans-serif;
+	  border: 3px solid #000000;
+	  box-shadow: 0.1em 0.1em;
+	  border-radius: 10px;
+	  min-width: 200px;
+	  min-height: 100px;
+    backdrop-filter: blur(2px);
+    }
+    
+    .link:hover {
+	  transform: translate(-0.05em, -0.05em);
+	  box-shadow: 0.15em 0.15em;
+    }
+    
+    .link a {
+	  display: flex;
+	  align-items: center;
+	  color: var(--color-text);
+	  font-family: 'Heebo', sans-serif;
+    }
+    
+    .link img {
+	  height: 25px;
+	  margin-right: 10px;
+    }
+
+    .delete-link-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .delete-link-button img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .add-card-button {
+      margin-top: 0px;
+      background-color: #f2f2f200;
+      border: none;
+      border-radius: 4px;
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .add-link-card {
+      backdrop-filter: blur(50px);
+      border-radius: 4px;
+      padding: 16px;
+      position: fixed;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 3px solid black;
+      box-shadow: 0.1em 0.1em;
+      top: 90px;
+      right: 20px;
+      width: 200px;
+      height: 405px;
+      display: none;
+      font-weight: 600;
+    }
+
+    #category-dropdown {
+  background-color: aliceblue;
+	font-family: inherit;
+	font-weight: 900;
+	font-size: 15px;
+	border: 3px solid black;
+	border-radius: 10px;
+	box-shadow: 0.1em 0.1em;
+	margin-left: 0px;
+  }
+
+  #pressbtn {
+    background-color: aliceblue;
+	font-weight: 900;
+	font-size: 15px;
+	border: 3px solid black;
+	border-radius: 10px;
+	box-shadow: 0.1em 0.1em;
+  }
+
+  #pressbtn:hover{
+	transform: translate(-0.05em, -0.05em);
+	box-shadow: 0.15em 0.15em;
+  }
+
+    #new-category-input, #link-title-input, #link-url-input, #link-description-input  {
+      border-radius: 10px;
+      border: 3px solid black;
+      background-color: var(--theme2);
+      box-shadow: 1px 1px black;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 5px 10px;
+      outline: none;
+      width: 168px;
+    }
+
+ #theme3, #theme4 {
+  position: relative;
+}
+
+#theme3::before,
+#theme4::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+#theme-styles {
+  display: none;
+}
+
+#theme-editor {
+  margin-top: 20px;
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="navbar" id="theme3">
+    <div class="navbar-left">
+      <div class="navbar-logo">
+        <a class="link-bush" href="index.html">
+          <h2 style="margin: 0px;" id="theme1">                
+            <img src="images/nature_FILL0_wght400_GRAD0_opsz48.png" alt="Website Icon" width="30px" height="30px">
+              Link-Bush
+            </h2>
+          </a>
+      </div>
+    </div>
+    <div class="navbar-center">
+      <div class="navbar-search">
+        <input type="text" placeholder="Search..." id="search-input" oninput="searchLinks()">
+      </div>
+      <button class="add-card-button navbar-icon" onclick="toggleAddLinkForm()">
+        <img src="images/format_list_bulleted_add_FILL0_wght400_GRAD0_opsz48.png" alt="Create Link" width="24px" height="24px">
+      </button>
+    </div>
+    <div class="navbar-right">
+
+      <div class="navbar-icon">
+        <img src="images/storefront_FILL0_wght400_GRAD0_opsz48.png" alt="Shop" width="24px" height="24px">
+      </div>
+      <div>
+
+        <a href="settings.html">
+          <button class="add-card-button navbar-icon">
+            <img src="images/settings_FILL0_wght400_GRAD0_opsz48.png" alt="Settings" width="24px" height="24px">
+          </button>
+        </a>
+      </div>
+      <div class="navbar-icon">
+        <img src="images/account_circle_FILL0_wght400_GRAD0_opsz48.png" alt="Profile" width="24px" height="24px">
+      </div>
+    </div>
+  </div>
+  
+  <div id="categories-container"></div>
+
+  
+  <div class="add-link-card" id="add-link-card" >
+    <label for="category-dropdown">Category:</label>
+    <select id="category-dropdown"></select>
+<br>
+    <label for="new-category-input">New Category:</label>
+    <input type="text" id="new-category-input" placeholder="New Category Title">
+
+    <label for="link-title-input">Title:</label required>
+    <input type="text" id="link-title-input">
+
+    <label for="link-description-input">Description:</label>
+      <input type="text" id="link-description-input">
+
+    <label for="link-url-input">URL:</label>
+    <input type="text" id="link-url-input" placeholder="https://" required>
+
+    <button id="pressbtn" onclick="addLink()">Add</button>
+  </div>
+
+<div style="display: none;">
+  <style id="theme-styles"></style>
+  <label for="header1-color">Header 1 Color:</label>
+  <input type="color" id="header1-color"> <br>
+  <label for="header2-color">Header 2 Color:</label>
+  <input type="color" id="header2-color"><br>
+  <label for="background1-color">Background 1 Color:</label>
+  <input type="color" id="background1-color"><br>
+  <label for="background2-color">Background 2 Color:</label>
+  <input type="color" id="background2-color"><br>
+  <label for="background-opacity1">Background Opacity:</label>
+  <input type="range" id="background-opacity1" min="0" max="1" step="0.1" value="1">
+  <label for="background-opacity2">Background Opacity:</label>
+  <input type="range" id="background-opacity2" min="0" max="1" step="0.1" value="1">
+</div>
+
+
+  <script>
+    let searchInput = document.getElementById('search-input');
+  
+  function searchLinks() {
+    const searchValue = searchInput.value.toLowerCase();
+    const categoryLinks = document.querySelectorAll('.category-links');
+
+    categoryLinks.forEach((categoryLink) => {
+      const links = categoryLink.getElementsByClassName('link');
+      Array.from(links).forEach((link) => {
+        const linkName = link.querySelector('h3').textContent.toLowerCase();
+        if (linkName.includes(searchValue)) {
+          link.style.display = 'block';
+        } else {
+          link.style.display = 'none';
+        }
+      });
+    });
+  }
+
+    let categories = [];
+
+    function displayCategories() {
+      const categoriesContainer = document.getElementById('categories-container');
+      categoriesContainer.innerHTML = '';
+
+      categories.forEach(category => {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.classList.add('category');
+        categoryDiv.addEventListener('dragover', (event) => {
+          event.preventDefault();
+        });
+        categoryDiv.addEventListener('drop', (event) => {
+          event.preventDefault();
+          const data = event.dataTransfer.getData('text/plain');
+          const { linkIndex, categoryName } = JSON.parse(data);
+          moveLink(linkIndex, categoryName, category.name);
+        });
+
+        const categoryHeader = document.createElement('div');
+        categoryHeader.classList.add('category-header');
+        categoryHeader.id = 'theme3';
+        categoryHeader.innerHTML = `
+          <div class="category-name">${category.name}</div>
+          <div class="expand-icon">-</div>
+          <div class="delete-button"></div>
+        `;
+        
+
+
+        categoryHeader.addEventListener('click', () => {
+          const isExpanded = categoryLinksDiv.style.display === 'none';
+          categoryLinksDiv.style.display = isExpanded ? 'flex' : 'none';
+          categoryHeader.querySelector('.expand-icon').textContent = isExpanded ? '+' : '-';
+        });
+
+        const deleteButton = categoryHeader.querySelector('.delete-button');
+        deleteButton.addEventListener('click', () => {
+          const confirmation = confirm(`Are you sure you want to delete the category "${category.name}" and all the links inside it? This action cannot be undone.`);
+          if (confirmation) {
+            // Delete the category and its links from local storage
+            deleteCategory(category.name);
+            // Remove the category from the UI
+            categoryDiv.remove();
+          }
+        });
+
+        function deleteCategory(categoryName) {
+          // Retrieve categories from local storage
+          const storedCategories = JSON.parse(localStorage.getItem('categories'));
+          if (storedCategories) {
+            // Find the category to delete by its name
+            const categoryIndex = storedCategories.findIndex(category => category.name === categoryName);
+            if (categoryIndex !== -1) {
+              // Remove the category and its links from the array
+              storedCategories.splice(categoryIndex, 1);
+              // Update the categories in local storage
+              localStorage.setItem('categories', JSON.stringify(storedCategories));
+            }
+          }
+        }
+
+  
+        const categoryLinksDiv = document.createElement('div');
+        categoryLinksDiv.classList.add('category-links');
+        categoryLinksDiv.setAttribute('data-category', category.name);
+
+        category.links.forEach((link, index) => {
+          const linkDiv = createLinkDiv(link, category, index);
+          categoryLinksDiv.appendChild(linkDiv);
+        });
+
+        categoryDiv.appendChild(categoryHeader);
+        categoryDiv.appendChild(categoryLinksDiv);
+
+        categoriesContainer.appendChild(categoryDiv);
+      });
+    }
+
+    function createLinkDiv(link, category, index) {
+      const linkDiv = document.createElement('div');
+      linkDiv.classList.add('link');
+      linkDiv.draggable = true;
+      linkDiv.addEventListener('dragstart', (event) => {
+        event.dataTransfer.setData('text/plain', JSON.stringify({ linkIndex: index, categoryName: category.name }));
+      });
+      linkDiv.id = 'theme4';
+
+      const linkName = document.createElement('h3');
+      const linkNameAnchor = document.createElement('a');
+      linkNameAnchor.href = link.url;
+      linkNameAnchor.id = "theme1";
+      linkNameAnchor.target = '_blank';
+      linkNameAnchor.innerHTML = `
+        <img src="https://www.google.com/s2/favicons?sz=64&domain=${link.url}" alt="Favicon">
+        ${link.name}
+      `;
+      linkName.appendChild(linkNameAnchor);
+      linkDiv.appendChild(linkName);
+
+      const linkDescription = document.createElement('p');
+      linkDescription.textContent = link.description;
+      linkDescription.id = "theme2";
+      linkDiv.appendChild(linkDescription);
+
+      const deleteButton = document.createElement('button');
+      deleteButton.classList.add('delete-link-button');
+      deleteButton.addEventListener('click', () => {
+        showDeleteConfirmation(link, category, index);
+      });
+
+      const deleteButtonImage = document.createElement('img');
+      deleteButtonImage.src = 'images/delete_FILL0_wght400_GRAD0_opsz48 (1).png';
+      deleteButton.appendChild(deleteButtonImage);
+
+      linkDiv.appendChild(deleteButton);
+
+      return linkDiv;
+    }
+
+    function moveLink(draggedLinkIndex, draggedCategoryName, droppedCategoryName) {
+      const draggedCategory = categories.find(category => category.name === draggedCategoryName);
+      const droppedCategory = categories.find(category => category.name === droppedCategoryName);
+      const link = draggedCategory.links[draggedLinkIndex];
+
+      draggedCategory.links.splice(draggedLinkIndex, 1);
+      droppedCategory.links.push(link);
+
+      saveCategoriesToLocalStorage();
+      displayCategories();
+    }
+
+    function showDeleteConfirmation(link, category, index) {
+      if (confirm('Are you sure you want to delete this link?')) {
+        deleteLink(link, category, index);
+      }
+    }
+
+    function deleteLink(link, category, index) {
+      category.links.splice(index, 1);
+      saveCategoriesToLocalStorage();
+      displayCategories();
+    }
+
+    function populateCategoryDropdown() {
+      const categoryDropdown = document.getElementById('category-dropdown');
+      categoryDropdown.innerHTML = '';
+
+      categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.name;
+        option.textContent = category.name;
+        categoryDropdown.appendChild(option);
+      });
+    }
+
+    function toggleAddLinkForm() {
+      const addLinkCard = document.getElementById('add-link-card');
+      addLinkCard.style.display = addLinkCard.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function addLink() {
+  const titleInput = document.getElementById('link-title-input');
+  const descriptionInput = document.getElementById('link-description-input');
+  const urlInput = document.getElementById('link-url-input');
+  const categoryDropdown = document.getElementById('category-dropdown');
+  const newCategoryInput = document.getElementById('new-category-input');
+
+  const categoryName = newCategoryInput.value.trim();
+  const selectedCategory = categoryDropdown.value;
+
+  let category;
+
+  if (categoryName === '') {
+    // Use the selected category from the dropdown
+    category = categories.find((cat) => cat.name === selectedCategory);
+  } else {
+    // Create a new category
+    category = {
+      name: categoryName,
+      links: [],
+      expanded: true,
+    };
+    categories.push(category);
+    populateCategoryDropdown();
+  }
+
+  const linkName = titleInput.value;
+  const linkDescription = descriptionInput.value;
+  const linkUrl = addHttpsToUrl(urlInput.value);
+
+  // Validate link name and URL
+  if (linkName.trim() === '' || !isValidUrl(linkUrl)) {
+    alert('Please enter a valid link name and URL.');
+    return;
+  }
+
+  const link = { name: linkName, url: linkUrl, description: linkDescription };
+  category.links.push(link);
+
+  saveCategoriesToLocalStorage();
+  displayCategories();
+
+  titleInput.value = '';
+  descriptionInput.value = '';
+  urlInput.value = '';
+  newCategoryInput.value = '';
+}
+
+function isValidUrl(url) {
+  // Simple URL validation using regular expression
+  const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+  return urlRegex.test(url);
+}
+
+
+  function addHttpsToUrl(url) {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      url = 'https://' + url;
+    }
+    return url;
+  }
+
+
+    function addCategory() {
+      const categoryInput = document.getElementById('category-input');
+
+      const category = { name: categoryInput.value, links: [], expanded: true };
+      categories.push(category);
+
+      saveCategoriesToLocalStorage();
+      displayCategories();
+      populateCategoryDropdown();
+
+      categoryInput.value = '';
+    }
+
+    function saveCategoriesToLocalStorage() {
+      localStorage.setItem('categories', JSON.stringify(categories));
+    }
+
+    // Load categories from local storage if available
+    const storedCategories = localStorage.getItem('categories');
+    if (storedCategories) {
+      categories = JSON.parse(storedCategories);
+    } else {
+      // Default categories
+      categories = [
+        // { name: 'Category 1', links: [{name: "Google", url: "https://google.com", description: "Google.com"}]},
+        // { name: 'Category 2', links: [{name: "Twitter", url: "https://twitter.com", description: "Twitter.com"}], expanded: true },
+      ];
+    }
+    displayCategories();
+    populateCategoryDropdown();
+
+    // Check if a background image exists in local storage
+    const savedBackgroundImage = localStorage.getItem('backgroundImage');
+    if (savedBackgroundImage) {
+      // Set the saved image as the background of the website
+      document.body.style.backgroundImage = `url(${savedBackgroundImage})`;
+      document.body.style.backgroundAttachment = 'fixed';
+      document.body.style.backgroundSize = 'cover';
+    }
+
+
+    
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+  const header1ColorInput = document.getElementById("header1-color");
+  const header2ColorInput = document.getElementById("header2-color");
+  const background1ColorInput = document.getElementById("background1-color");
+  const background2ColorInput = document.getElementById("background2-color");
+  const backgroundOpacityInput1 = document.getElementById("background-opacity1");
+  const backgroundOpacityInput2 = document.getElementById("background-opacity2");
+  const themeStyles = document.getElementById("theme-styles");
+
+  // Load theme settings from local storage
+  const savedThemeSettings = JSON.parse(localStorage.getItem("themeSettings")) || {};
+
+  // Update theme inputs and styles with saved settings
+  header1ColorInput.value = savedThemeSettings.header1Color || "#000000";
+  header2ColorInput.value = savedThemeSettings.header2Color || "#000000";
+  background1ColorInput.value = savedThemeSettings.background1Color || "#ffffff";
+  background2ColorInput.value = savedThemeSettings.background2Color || "#ffffff";
+  backgroundOpacityInput1.value = savedThemeSettings.backgroundOpacity1 || "1";
+  backgroundOpacityInput2.value = savedThemeSettings.backgroundOpacity2 || "1";
+
+  function updateTheme() {
+    const header1Color = header1ColorInput.value;
+    const header2Color = header2ColorInput.value;
+    const background1Color = background1ColorInput.value;
+    const background2Color = background2ColorInput.value;
+    const backgroundOpacity1 = backgroundOpacityInput1.value;
+    const backgroundOpacity2 = backgroundOpacityInput2.value;
+
+    const css = `
+      #theme1 {
+        color: ${header1Color};
+      }
+
+      #theme2 {
+        color: ${header2Color};
+      }
+
+      #theme3::before {
+        background-color: ${background1Color};
+        opacity: ${backgroundOpacity1};
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      #theme4::before {
+        background-color: ${background2Color};
+        opacity: ${backgroundOpacity2};
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+    `;
+
+    // Update theme styles
+    themeStyles.textContent = css;
+
+    // Save theme settings to local storage
+    const themeSettings = {
+      header1Color,
+      header2Color,
+      background1Color,
+      background2Color,
+      backgroundOpacity1,
+      backgroundOpacity2,
+    };
+    localStorage.setItem("themeSettings", JSON.stringify(themeSettings));
+  }
+
+  header1ColorInput.addEventListener("input", updateTheme);
+  header2ColorInput.addEventListener("input", updateTheme);
+  background1ColorInput.addEventListener("input", updateTheme);
+  background2ColorInput.addEventListener("input", updateTheme);
+  backgroundOpacityInput1.addEventListener("input", updateTheme);
+  backgroundOpacityInput2.addEventListener("input", updateTheme);
+
+  updateTheme();
+});
+  </script>
+</body>
+</html>
