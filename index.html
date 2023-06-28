@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>LinkBush#2</title>
+  <title>Bush-Link</title>
   <style>
     *::-webkit-scrollbar{
     display: none;
@@ -218,9 +219,17 @@
       cursor: pointer;
     }
 
+    .add-link-card > input{
+      margin-bottom: 9px;
+    }
+
+    .add-link-card > select{
+      margin-bottom: 9px;
+    }
+
     .add-link-card {
       backdrop-filter: blur(50px);
-      border-radius: 4px;
+      border-radius: 5px;
       padding: 16px;
       position: fixed;
       top: 50px;
@@ -231,7 +240,8 @@
       top: 90px;
       right: 20px;
       width: 200px;
-      height: 405px;
+      /* height: 405px; */
+      max-height: fit-content;
       display: none;
       font-weight: 600;
     }
@@ -299,6 +309,16 @@
 
   </style>
 </head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K7Y3RT4D5M"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K7Y3RT4D5M');
+    </script>
+
 <body>
   <div class="navbar" id="theme3">
     <div class="navbar-left">
@@ -306,7 +326,7 @@
         <a class="link-bush" href="index.html">
           <h2 style="margin: 0px;" id="theme1">                
             <img src="images/nature_FILL0_wght400_GRAD0_opsz48.png" alt="Website Icon" width="30px" height="30px">
-              Link-Bush
+              Bush-Link
             </h2>
           </a>
       </div>
@@ -320,20 +340,11 @@
       </button>
     </div>
     <div class="navbar-right">
-
-      <div class="navbar-icon">
-        <img src="images/storefront_FILL0_wght400_GRAD0_opsz48.png" alt="Shop" width="24px" height="24px">
-      </div>
-      <div>
-
         <a href="settings.html">
           <button class="add-card-button navbar-icon">
             <img src="images/settings_FILL0_wght400_GRAD0_opsz48.png" alt="Settings" width="24px" height="24px">
           </button>
         </a>
-      </div>
-      <div class="navbar-icon">
-        <img src="images/account_circle_FILL0_wght400_GRAD0_opsz48.png" alt="Profile" width="24px" height="24px">
       </div>
     </div>
   </div>
@@ -397,7 +408,39 @@
     });
   }
 
-    let categories = [];
+  let categories = [
+  {
+    name: "Social Networking",
+    links: [
+      { name: "Facebook ", url: "https://www.facebook.com/", description: "Connect, Share, Community" },
+      { name: "Instagram ", url: "https://www.instagram.com/", description: "Photos, Videos, Stories" },
+      { name: "LinkedIn ", url: "https://www.linkedin.com/", description: "Professional Networking" }
+    ]
+  },
+  {
+    name: "Entertainment",
+    links: [
+      { name: "YouTube ", url: "https://www.youtube.com/", description: "Videos, Sharing" },
+      { name: "Netflix ", url: "https://www.netflix.com/", description: "Streaming, Movies, TV Shows" },
+      { name: "Reddit ", url: "https://www.reddit.com/", description: "Community, Discussions" }
+    ]
+  },
+  {
+    name: "Information and News",
+    links: [
+      { name: "Wikipedia ", url: "https://www.wikipedia.org/", description: "Encyclopedia, Contributions" },
+      { name: "The New York Times", url: "https://www.nytimes.com/", description: "News, Articles" },
+      { name: "Stack Overflow", url: "https://stackoverflow.com/", description: "Programming Q&A, Solutions" }
+    ]
+  },
+  {
+    name: "E-commerce",
+    links: [
+      { name: "Amazon ", url: "https://www.amazon.com/", description: "Online Marketplace" },
+      { name: "eBay ", url: "https://www.ebay.com/", description: "Auctions, Buying, Selling" }
+    ]
+  }
+];
 
     function displayCategories() {
       const categoriesContainer = document.getElementById('categories-container');
@@ -425,8 +468,6 @@
           <div class="delete-button"></div>
         `;
         
-
-
         categoryHeader.addEventListener('click', () => {
           const isExpanded = categoryLinksDiv.style.display === 'none';
           categoryLinksDiv.style.display = isExpanded ? 'flex' : 'none';
@@ -437,29 +478,22 @@
         deleteButton.addEventListener('click', () => {
           const confirmation = confirm(`Are you sure you want to delete the category "${category.name}" and all the links inside it? This action cannot be undone.`);
           if (confirmation) {
-            // Delete the category and its links from local storage
             deleteCategory(category.name);
-            // Remove the category from the UI
             categoryDiv.remove();
           }
         });
 
         function deleteCategory(categoryName) {
-          // Retrieve categories from local storage
           const storedCategories = JSON.parse(localStorage.getItem('categories'));
           if (storedCategories) {
-            // Find the category to delete by its name
             const categoryIndex = storedCategories.findIndex(category => category.name === categoryName);
             if (categoryIndex !== -1) {
-              // Remove the category and its links from the array
               storedCategories.splice(categoryIndex, 1);
-              // Update the categories in local storage
               localStorage.setItem('categories', JSON.stringify(storedCategories));
             }
           }
         }
 
-  
         const categoryLinksDiv = document.createElement('div');
         categoryLinksDiv.classList.add('category-links');
         categoryLinksDiv.setAttribute('data-category', category.name);
@@ -571,10 +605,8 @@
   let category;
 
   if (categoryName === '') {
-    // Use the selected category from the dropdown
     category = categories.find((cat) => cat.name === selectedCategory);
   } else {
-    // Create a new category
     category = {
       name: categoryName,
       links: [],
@@ -588,7 +620,6 @@
   const linkDescription = descriptionInput.value;
   const linkUrl = addHttpsToUrl(urlInput.value);
 
-  // Validate link name and URL
   if (linkName.trim() === '' || !isValidUrl(linkUrl)) {
     alert('Please enter a valid link name and URL.');
     return;
@@ -607,7 +638,6 @@
 }
 
 function isValidUrl(url) {
-  // Simple URL validation using regular expression
   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
   return urlRegex.test(url);
 }
@@ -638,52 +668,38 @@ function isValidUrl(url) {
       localStorage.setItem('categories', JSON.stringify(categories));
     }
 
-    // Load categories from local storage if available
     const storedCategories = localStorage.getItem('categories');
     if (storedCategories) {
       categories = JSON.parse(storedCategories);
     } else {
-      // Default categories
-      categories = [
-        // { name: 'Category 1', links: [{name: "Google", url: "https://google.com", description: "Google.com"}]},
-        // { name: 'Category 2', links: [{name: "Twitter", url: "https://twitter.com", description: "Twitter.com"}], expanded: true },
-      ];
     }
     displayCategories();
     populateCategoryDropdown();
 
-    // Check if a background image exists in local storage
     const savedBackgroundImage = localStorage.getItem('backgroundImage');
     if (savedBackgroundImage) {
-      // Set the saved image as the background of the website
       document.body.style.backgroundImage = `url(${savedBackgroundImage})`;
       document.body.style.backgroundAttachment = 'fixed';
       document.body.style.backgroundSize = 'cover';
     }
 
-
-    
-
-
     document.addEventListener("DOMContentLoaded", function() {
-  const header1ColorInput = document.getElementById("header1-color");
-  const header2ColorInput = document.getElementById("header2-color");
-  const background1ColorInput = document.getElementById("background1-color");
-  const background2ColorInput = document.getElementById("background2-color");
-  const backgroundOpacityInput1 = document.getElementById("background-opacity1");
-  const backgroundOpacityInput2 = document.getElementById("background-opacity2");
-  const themeStyles = document.getElementById("theme-styles");
+      const header1ColorInput = document.getElementById("header1-color");
+      const header2ColorInput = document.getElementById("header2-color");
+      const background1ColorInput = document.getElementById("background1-color");
+      const background2ColorInput = document.getElementById("background2-color");
+      const backgroundOpacityInput1 = document.getElementById("background-opacity1");
+      const backgroundOpacityInput2 = document.getElementById("background-opacity2");
+      const themeStyles = document.getElementById("theme-styles");
 
-  // Load theme settings from local storage
-  const savedThemeSettings = JSON.parse(localStorage.getItem("themeSettings")) || {};
+      const savedThemeSettings = JSON.parse(localStorage.getItem("themeSettings")) || {};
 
-  // Update theme inputs and styles with saved settings
-  header1ColorInput.value = savedThemeSettings.header1Color || "#000000";
-  header2ColorInput.value = savedThemeSettings.header2Color || "#000000";
-  background1ColorInput.value = savedThemeSettings.background1Color || "#ffffff";
-  background2ColorInput.value = savedThemeSettings.background2Color || "#ffffff";
-  backgroundOpacityInput1.value = savedThemeSettings.backgroundOpacity1 || "1";
-  backgroundOpacityInput2.value = savedThemeSettings.backgroundOpacity2 || "1";
+      header1ColorInput.value = savedThemeSettings.header1Color || "#000000";
+      header2ColorInput.value = savedThemeSettings.header2Color || "#000000";
+      background1ColorInput.value = savedThemeSettings.background1Color || "#ffffff";
+      background2ColorInput.value = savedThemeSettings.background2Color || "#ffffff";
+      backgroundOpacityInput1.value = savedThemeSettings.backgroundOpacity1 || "1";
+      backgroundOpacityInput2.value = savedThemeSettings.backgroundOpacity2 || "1";
 
   function updateTheme() {
     const header1Color = header1ColorInput.value;
@@ -717,6 +733,7 @@ function isValidUrl(url) {
       #theme4::before {
         background-color: ${background2Color};
         opacity: ${backgroundOpacity2};
+        border-radius: 5px;
         content: "";
         position: absolute;
         top: 0;
@@ -727,10 +744,8 @@ function isValidUrl(url) {
       }
     `;
 
-    // Update theme styles
     themeStyles.textContent = css;
 
-    // Save theme settings to local storage
     const themeSettings = {
       header1Color,
       header2Color,

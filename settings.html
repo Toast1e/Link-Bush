@@ -3,11 +3,21 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Bush-Link</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
     </head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K7Y3RT4D5M"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K7Y3RT4D5M');
+    </script>
+
     <style>
     *{
       font-family: 'Heebo', sans-serif;
@@ -297,12 +307,10 @@
 }
 
 .button:hover .button_top {
-  /* Pull the button upwards when hovered */
   transform: translateY(-0.33em);
 }
 
 .button:active .button_top {
-  /* Push the button downwards when pressed */
   transform: translateY(0);
 }
 
@@ -360,7 +368,7 @@
                 <a class="link-bush" href="index.html">
                   <h2 style="margin: 0px;" id="theme1">                
                     <img src="images/nature_FILL0_wght400_GRAD0_opsz48.png" alt="Website Icon" width="30px" height="30px">
-                      Link-Bush
+                      Bush-Link
                     </h2>
                   </a>
                 </div>
@@ -388,20 +396,6 @@
             </div>
         </div>
       <div class="settings">
-        <div class="unsplash" id="theme4"> 
-          <div class="content">
-            <div class="settings-top">
-              <img src="images/icon/unsplash_logo_icon_206651.png" alt="Pen">
-              <h2 id="theme2" style="margin: 5px;">Search Unsplash</h2>
-            </div>
-            <div id="search-container">
-              <input type="text" id="search-input" placeholder="Search wallpapers">
-              <button id="search-button">Search</button>
-            </div>
-            <div style="color: #a0a0a0bd;"><h5>Coming Soon...</h5></div>
-            <div id="results-container"></div>
-          </div>
-        </div>
         <div class="file" id="theme4"> 
           <div class="content">
               <div id="setting-div">
@@ -422,7 +416,10 @@
                 <hr>
                 <div class="widget" style="padding: 0px;">
                 <h4>Sync Your Devices:</h4>
-                <span class="explain">Download your data from this device. <br> Upload the same file onto another device</span>
+                <span style="margin-left: 25px;" class="explain">Download a file with all your links with "Download".</span><br><br>
+                <span style="margin-left: 25px;" class="explain">Upload that same file onto another device</span><br>
+                <span style="margin-left: 25px;" class="explain">to transfer all the links with "Upload".</span>
+
                 <br><br>
                 <div class="upload">
                   <input class="button" type="file" id="fileInput" />
@@ -478,135 +475,33 @@
     </div>
         
         <script>
-
-// const accessKey = '';
-// const searchInput = document.getElementById('search-input');
-// const searchButton = document.getElementById('search-button');
-// const resultsContainer = document.getElementById('results-container');
-
-// searchButton.addEventListener('click', () => {
-//   const query = searchInput.value;
-//   searchPhotos(query);
-// });
-
-// // Randomly load images when the page loads
-// window.addEventListener('load', () => {
-//   searchPhotos('random');
-// });
-
-// async function searchPhotos(query) {
-//   resultsContainer.innerHTML = '';
-
-//   let url;
-//   if (query === 'random') {
-//     url = `https://api.unsplash.com/photos/random?count=10&client_id=${accessKey}`;
-//   } else {
-//     url = `https://api.unsplash.com/search/photos?query=${query}&client_id=${accessKey}`;
-//   }
-
-//   try {
-//     const response = await fetch(url);
-//     const data = await response.json();
-    
-//     if (data.results) {
-//       data.results.forEach(photo => {
-//         const result = createResult(photo);
-//         resultsContainer.appendChild(result);
-//       });
-//     } else {
-//       data.forEach(photo => {
-//         const result = createResult(photo);
-//         resultsContainer.appendChild(result);
-//       });
-//     }
-//   } catch (error) {
-//     console.log('Error:', error);
-//   }
-// }
-
-// function createResult(photo) {
-//   const result = document.createElement('div');
-//   result.classList.add('result');
-
-//   const image = document.createElement('img');
-//   image.src = photo.urls.regular;
-//   image.alt = photo.alt_description;
-//   image.addEventListener('click', () => saveBackgroundImage(photo.urls.regular));
-//   result.appendChild(image);
-
-//   const attribution = document.createElement('p');
-//   attribution.classList.add('attribution');
-//   attribution.innerHTML = `Photo by <a href="${photo.user.links.html}" target="_blank">${photo.user.name}</a> on <a href="https://unsplash.com" target="_blank">Unsplash</a>`;
-//   result.appendChild(attribution);
-
-//   return result;
-// }
-
-// function saveBackgroundImage(imageUrl) {
-//   fetch(imageUrl)
-//     .then(response => response.blob())
-//     .then(blob => {
-//       const reader = new FileReader();
-//       reader.onloadend = () => {
-//         const base64data = reader.result;
-//         localStorage.setItem('backgroundImage', base64data);
-//         location.reload(); // Refresh the page
-//       };
-//       reader.readAsDataURL(blob);
-//     })
-//     .catch(error => {
-//       console.log('Error:', error);
-//     });
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                // Function to handle the image upload
   function handleImageUpload(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
 
   reader.onload = function (e) {
-    // Set the image as the background of the website
     document.body.style.backgroundImage = `url(${e.target.result})`;
-    document.body.style.backgroundAttachment = 'fixed'; // Prevent scrolling of the background image
-    document.body.style.backgroundSize = 'cover'; // Maintain aspect ratio
+    document.body.style.backgroundAttachment = 'fixed';
+    document.body.style.backgroundSize = 'cover';
 
-    // Display the uploaded image in the image-preview element
     const imagePreview = document.getElementById('image-preview');
     imagePreview.src = e.target.result;
 
-    // Save the image to local storage
     localStorage.setItem('backgroundImage', e.target.result);
   };
 
   reader.readAsDataURL(file);
 }
 
-// Event listener for image upload button
 const imageUpload = document.getElementById('image-upload');
 imageUpload.addEventListener('change', handleImageUpload);
 
-// Check if a background image exists in local storage
 const savedBackgroundImage = localStorage.getItem('backgroundImage');
 if (savedBackgroundImage) {
-  // Set the saved image as the background of the website
   document.body.style.backgroundImage = `url(${savedBackgroundImage})`;
   document.body.style.backgroundAttachment = 'fixed';
   document.body.style.backgroundSize = 'cover';
 
-  // Display the saved image in the image-preview element
   const imagePreview = document.getElementById('image-preview');
   imagePreview.src = savedBackgroundImage;
 }
@@ -652,10 +547,6 @@ function uploadLocalStorage() {
     reader.readAsText(file);
   }
 }
-
-
-
-
 document.addEventListener("DOMContentLoaded", function() {
   const header1ColorInput = document.getElementById("header1-color");
   const header2ColorInput = document.getElementById("header2-color");
@@ -665,10 +556,8 @@ document.addEventListener("DOMContentLoaded", function() {
   const backgroundOpacityInput2 = document.getElementById("background-opacity2");
   const themeStyles = document.getElementById("theme-styles");
 
-  // Load theme settings from local storage
   const savedThemeSettings = JSON.parse(localStorage.getItem("themeSettings")) || {};
 
-  // Update theme inputs and styles with saved settings
   header1ColorInput.value = savedThemeSettings.header1Color || "#000000";
   header2ColorInput.value = savedThemeSettings.header2Color || "#000000";
   background1ColorInput.value = savedThemeSettings.background1Color || "#ffffff";
@@ -708,6 +597,7 @@ document.addEventListener("DOMContentLoaded", function() {
       #theme4::before {
         background-color: ${background2Color};
         opacity: ${backgroundOpacity2};
+        border-radius: 5px;
         content: "";
         position: absolute;
         top: 0;
@@ -718,10 +608,8 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     `;
 
-    // Update theme styles
     themeStyles.textContent = css;
 
-    // Save theme settings to local storage
     const themeSettings = {
       header1Color,
       header2Color,
